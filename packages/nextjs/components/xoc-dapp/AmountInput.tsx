@@ -18,7 +18,12 @@ interface AmountInputProps {
   onChangeInput: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function AmountInput({ actionText, value, onChangeInput, actionHandler }: AmountInputProps): JSX.Element {
+export default function AmountInput({
+  actionText,
+  value,
+  onChangeInput,
+  actionHandler,
+}: AmountInputProps): JSX.Element {
   // Initialize the amount state with the value from the inputAmount prop
 
   // Write to the contract using the useScaffoldContractWrite hook
@@ -28,7 +33,7 @@ export default function AmountInput({ actionText, value, onChangeInput, actionHa
     functionName: "deposit",
   }) */
   // Write to the contract using the useScaffoldContractWrite hook
-  const { write } = useContractWrite({
+  const {data, isLoading, isSuccess } = useContractWrite({
     address: "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
     abi: houseOfReserveABI,
     functionName: "deposit",
@@ -99,6 +104,8 @@ export default function AmountInput({ actionText, value, onChangeInput, actionHa
         <button onClick={() => approveWrite()} className="btn btn-primary">
           approve
         </button>
+        {isLoading && <div>Check Wallet</div>}
+        {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
       </div>
     </form>
   );

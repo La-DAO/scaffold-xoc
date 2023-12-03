@@ -3,13 +3,9 @@ import { useState } from "react";
 import AmountInput from "./AmountInput";
 // import CollateralInfo from "./CollateralInfo";
 import PillNavigation from "./PillNavigation";
+import { houseOfCoinABI, houseOfReserveABI } from "./abis/xocabis";
 import { parseEther } from "viem";
-import {
-  useScaffoldContractRead,
-  /* useScaffoldContractWrite */
-} from "~~/hooks/scaffold-eth";
-import { houseOfReserveABI, houseOfCoinABI } from "./abis/xocabis";
-import { useContractWrite } from "wagmi";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 const Dashboard: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState("deposit");
@@ -28,38 +24,53 @@ const Dashboard: React.FC = () => {
   const XOCRedeemInputError = ""; // Define or retrieve XOCRedeemInputError
   const XOCRedeemInputAmountBigNum = undefined; // Define or retrieve XOCRedeemInputAmountBigNum
 
-  const userXOCDebt = null; // Define or retrieve userXOCDebt
+  /*  const userXOCDebt = null; // Define or retrieve userXOCDebt */
   const WETHWithdrawInputAmount = "0"; // Define or retrieve WETHWithdrawInputAmount
   const WETHWithdrawInputError = ""; // Define or retrieve WETHWithdrawInputError
   const WETHWithdrawInputAmountBigNum = undefined; // Define or retrieve WETHWithdrawInputAmountBigNum
   const userCollateralMaxWithdrawal = null; // Define or retrieve userCollateralMaxWithdrawal
-  const { data: userXOCBalance } = useScaffoldContractRead({
+  /*   const { data: userXOCBalance } = useScaffoldContractRead({
     contractName: "YourContract",
     functionName: "totalCounter",
-  });
+  }); */
 
   const [deposit, setDeposit] = useState<string>("");
   const [mint, setMint] = useState<string>("");
   const [redeem, setRedeem] = useState<string>("");
   const [withdraw, setWithdraw] = useState<string>("");
 
-  const { write: depositWETH } = useContractWrite({
+  const { config: deposito } = usePrepareContractWrite({
     address: "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
     abi: houseOfReserveABI,
     functionName: "deposit",
     args: [parseEther(deposit)],
   });
 
-  const { write: mintXOC } = useContractWrite({
+  const { write: depositWETH } = useContractWrite(deposito);
+
+  const { config: minto } = usePrepareContractWrite({
     address: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
     abi: houseOfCoinABI,
     functionName: "mintCoin",
     args: [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-      "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
+      "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
       parseEther(mint),
     ],
   });
+
+  const { write: mintXOC } = useContractWrite(minto);
+
+  /*   const { write: mintXOC } = useContractWrite({
+    address: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
+    abi: houseOfCoinABI,
+    functionName: "mintCoin",
+    args: [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
+      parseEther(mint),
+    ],
+  }); */
 
   const { write: withdrawWETH } = useContractWrite({
     address: "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
@@ -71,7 +82,6 @@ const Dashboard: React.FC = () => {
   return (
     <div className="wrapper">
       <PillNavigation selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <div>{userXOCBalance}</div>
       <div className="main-section">
         <div className="input-section">
           <div className="input-section__container">
@@ -134,7 +144,7 @@ const Dashboard: React.FC = () => {
                 inputAmount={XOCRedeemInputAmount}
                 inputError={XOCRedeemInputError}
                 inputAmountBigNum={XOCRedeemInputAmountBigNum}
-                inputLimit={userXOCBalance?.gt(userXOCDebt ? userXOCDebt : 0) ? userXOCDebt : userXOCBalance}
+                inputLimit={""}
                 inputTypeText="Token Redeem"
                 actionText="Redeem"
                 onChangeInput={setRedeem}

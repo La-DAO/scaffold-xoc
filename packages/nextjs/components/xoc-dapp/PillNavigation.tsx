@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-const PillNavigation = ({ selectedTab, setSelectedTab }) => {
+interface PillNavigationProps {
+  selectedTab: string;
+  setSelectedTab: (tab: string) => void;
+}
 
-
+const PillNavigation: React.FC<PillNavigationProps> = ({ selectedTab, setSelectedTab }) => {
   const tabs = [
     { id: "deposit", label: "Deposit" },
     { id: "mint", label: "Mint" },
@@ -24,17 +27,13 @@ const PillNavigation = ({ selectedTab, setSelectedTab }) => {
   return (
     <div className=" flex focus-within:to-30% m-auto justify-center text-center mt-24 border-2 rounded-md border-collapse w-fit dark:border-gray-700">
       <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
-        {tabs.map((tab) => (
+        {tabs.map(tab => (
           <li key={tab.id} className="mr-2">
             <a
               href="#"
               onClick={() => handleTabClick(tab.id)}
               className={`${
-                tab.id === selectedTab
-                  ? tabStyle.selected
-                  : tab.id === "disabled"
-                  ? tabStyle.disabled
-                  : tabStyle.base
+                tab.id === selectedTab ? tabStyle.selected : tab.id === "disabled" ? tabStyle.disabled : tabStyle.base
               }`}
             >
               {tab.label}

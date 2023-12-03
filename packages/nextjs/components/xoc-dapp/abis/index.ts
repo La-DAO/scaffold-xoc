@@ -1,12 +1,4 @@
-import {
-  assetsAccountantABI,
-  ERC20ABI,
-  houseOfCoinABI,
-  houseOfReserveABI,
-  mockWETHABI,
-  XOCABI,
-} from "../abis";
-
+/* 
 export interface Asset {
   name: string;
   address: string;
@@ -224,3 +216,4 @@ export function getCollateralOptions(chainId_: string | number): string[] {
 
   return options;
 }
+ */
