@@ -1,46 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import Button3D from './Button3D';
-import { useContractWrite } from 'wagmi';
-import { parseEther } from 'ethers/lib/utils';
+import React from "react";
+// import { EtherInput } from "../scaffold-eth";
+// import Button3D from "./Button3D";
+import { approveABI, houseOfReserveABI } from "./abis/xocabis";
+import { parseEther } from "viem";
+import { useContractWrite } from "wagmi";
 
 interface AmountInputProps {
-  inputAmount: string;
+  headerText: string;
+  inputAmount?: string;
+  inputError: any;
+  inputAmountBigNum: any;
+  inputLimit: any;
+  inputTypeText: any;
   actionText: string;
-  actionHandler: () => void;
+  actionHandler?: () => void;
+  value: any;
+  onChangeInput: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export default function AmountInput({ inputAmount, actionText, actionHandler }: AmountInputProps): JSX.Element {
+export default function AmountInput({ actionText, value, onChangeInput, actionHandler }: AmountInputProps): JSX.Element {
   // Initialize the amount state with the value from the inputAmount prop
-  const [amount, setAmount] = useState<bigint>(BigInt(inputAmount) || BigInt(0));
 
   // Write to the contract using the useScaffoldContractWrite hook
-/*   const { data, isLoading, isSuccess, write } = useContractWrite({
+  /*   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
     abi: wagmigotchiABI,
     functionName: "deposit",
   }) */
+  // Write to the contract using the useScaffoldContractWrite hook
+  const { write } = useContractWrite({
+    address: "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
+    abi: houseOfReserveABI,
+    functionName: "deposit",
+    args: [value],
+  });
+
+  const { write: approveWrite } = useContractWrite({
+    address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    abi: approveABI,
+    functionName: "approve",
+    args: ["0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8", parseEther("1")],
+  });
 
   // Update the component state when the inputAmount prop changes
-  useEffect(() => {
-    setAmount(BigInt(inputAmount) || BigInt(0));
-  }, [inputAmount]);
+  /* useEffect(() => {
+    onChangeInput(inputAmount || "");
+  }, [inputAmount]); */
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newAmount = BigInt(event.target.value);
-    setAmount(isNaN(Number(newAmount)) ? BigInt(0) : BigInt(newAmount));
+    const input = event.target.value;
+    if (/^\d*\.?\d*$/.test(input)) {
+      console.log("valid");
+      onChangeInput(input);
+    } else {
+      console.log("invalid");
+    }
+
+    // If input is a valid number, parse it to BigInt
+    /*
+    const newAmount = !isNaN(Number(input))
+      ? BigInt(parseFloat(input).toFixed(0))
+      : input.includes(".")
+      ? BigInt(0) // or handle the dot as needed
+      : BigInt(0);
+      */
+
+    // const newAmount = input === "" ? BigInt(0) : !isNaN(Number(input)) ? BigInt(parseFloat(input)) : BigInt(0);
   };
 
-  const handleOnSubmit = async (event) => {
+  /*   const handleOnSubmit = async (event) => {
     event.preventDefault();
     console.log('Sending amount: ', amount);
     // Call the write function with the amount state
     await write(amount);
 
-  };
+  }; */
 
   return (
-    <form onSubmit={handleOnSubmit} className="p-10 pt-36 flex flex-col items-center border-r-2">
+    <form className="p-10 pt-36 flex flex-col items-center border-r-2">
       <div className="relative p-10">
+        {/*<EtherInput value={amount} onChange={setAmount} />*/}
         <input
           type="search"
           id="search"
@@ -48,12 +87,18 @@ export default function AmountInput({ inputAmount, actionText, actionHandler }: 
           placeholder="Enter Amount"
           required
           // Set the inputAmount prop as the input value
-          value={amount.toString()}
+          value={value.toString()}
           onChange={handleAmountChange}
         />
       </div>
       <div className="">
-        <Button3D actionHandler={() => 0}>{actionText}</Button3D>
+        <button onClick={actionHandler} className="btn btn-primary">
+          {actionText}
+        </button>
+
+        <button onClick={() => approveWrite()} className="btn btn-primary">
+          approve
+        </button>
       </div>
     </form>
   );
