@@ -44,7 +44,7 @@ export default function AmountInput({
     address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     abi: approveABI,
     functionName: "approve",
-    args: ["0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8", parseEther("1")],
+    args: ["0xd411BE9A105Ea7701FabBe58C2834b7033EBC203", parseEther("1")],
   });
 
   // Update the component state when the inputAmount prop changes

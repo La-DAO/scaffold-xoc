@@ -5,7 +5,7 @@ import AmountInput from "./AmountInput";
 import PillNavigation from "./PillNavigation";
 import { houseOfCoinABI, houseOfReserveABI } from "./abis/xocabis";
 import { parseEther } from "viem";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { useContractWrite } from "wagmi";
 
 const Dashboard: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState("deposit");
@@ -39,41 +39,54 @@ const Dashboard: React.FC = () => {
   const [redeem, setRedeem] = useState<string>("");
   const [withdraw, setWithdraw] = useState<string>("");
 
-  const { config: deposito } = usePrepareContractWrite({
-    address: "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
+  /*   const { config: deposito } = usePrepareContractWrite({
+    address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
     abi: houseOfReserveABI,
     functionName: "deposit",
     args: [parseEther(deposit)],
   });
 
   const { write: depositWETH } = useContractWrite(deposito);
-
-  const { config: minto } = usePrepareContractWrite({
+ */
+  const { write: depositWETH } = useContractWrite({
+    address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
+    abi: houseOfReserveABI,
+    functionName: "deposit",
+    args: [parseEther(deposit)],
+  });
+  /*   const { config: minto } = usePrepareContractWrite({
     address: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
     abi: houseOfCoinABI,
     functionName: "mintCoin",
     args: [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-      "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
+      "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
       parseEther(mint),
     ],
   });
 
   const { write: mintXOC } = useContractWrite(minto);
-
-  /*   const { write: mintXOC } = useContractWrite({
+ */
+  const { write: mintXOC } = useContractWrite({
     address: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
     abi: houseOfCoinABI,
     functionName: "mintCoin",
     args: [
       "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-      "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
+      "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
       parseEther(mint),
     ],
-  }); */
+  });
+
+  const { write: redeemXOC } = useContractWrite({
+    address: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
+    abi: houseOfCoinABI,
+    functionName: "paybackCoin",
+    args: ["70972479931534892086591623403426119776171689317875217451089907405265175126937", parseEther(redeem)],
+  });
 
   const { write: withdrawWETH } = useContractWrite({
-    address: "0x09dFC327364701d73683aCe049B8A5a8Ea27F3E8",
+    address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203",
     abi: houseOfReserveABI,
     functionName: "withdraw",
     args: [parseEther(withdraw)],
@@ -149,6 +162,7 @@ const Dashboard: React.FC = () => {
                 actionText="Redeem"
                 onChangeInput={setRedeem}
                 value={redeem}
+                actionHandler={redeemXOC}
               />
             ) : selectedTab === "withdraw" ? (
               <AmountInput
