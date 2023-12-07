@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon, PhotoIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
 
@@ -15,53 +15,42 @@ const Home: NextPage = () => {
             <span className="block text-4xl font-bold">Scaffold-XOC</span>
           </h1>
           <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/pages/index.tsx
-            </code>
+            This is an open-source scaffold-eth project with a few extra goodies to help you get started building your
           </p>
           <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
+            application using XOC as an ERC20 token. It includes a few example contracts and a simple UI to interact with
           </p>
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
+              <BanknotesIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
+                Interact with our smart contracts using the{" "}
+                <Link href="/defi" passHref className="link">
+                  DeFi
                 </Link>{" "}
                 tab.
               </p>
             </div>
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <SparklesIcon className="h-8 w-8 fill-secondary" />
+              <PhotoIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Experiment with{" "}
-                <Link href="/example-ui" passHref className="link">
-                  Example UI
+                Coming soon will be our Frontend to interact with{" "}
+                <Link href="/" passHref className="link">
+                  NFT
                 </Link>{" "}
-                to build your own UI.
               </p>
             </div>
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
+              <ChatBubbleLeftRightIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore your local transactions with the{" "}
+                Explore our{" "}
                 <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
+                  DAO
                 </Link>{" "}
-                tab.
+                and help us build the future of XOC.
               </p>
             </div>
           </div>
