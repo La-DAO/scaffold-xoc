@@ -3,7 +3,7 @@ import Dashboard from "../components/xoc-dapp/Dashboard";
 import type { NextPage } from "next";
 
 
-const Dapp: NextPage = () => {
+const Defi: NextPage = () => {
 
   return (
     <>
@@ -13,4 +13,4 @@ const Dapp: NextPage = () => {
   );
 };
 
-export default Dapp;
+export default Defi;
