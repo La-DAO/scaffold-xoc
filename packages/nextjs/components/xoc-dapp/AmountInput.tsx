@@ -88,7 +88,7 @@ export default function AmountInput({
         <input
           type="search"
           id="search"
-          className="text-5xl block p-4 pl-10 text-gray-900 border-b-4 rounded-lg bg-inherit focus:ring-blue-500 focus:border-white dark:bg-inherit dark:border-white dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="text-5xl block p-4 pl-10 text-center text-gray-900 border-b-4 rounded-lg bg-inherit  focus:border-bg-base-300 dark:bg-inherit dark:border-bg-base-100 dark:placeholder-bg-base-100 dark:border-bg-base-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-orange-600"
           placeholder="Enter Amount"
           required
           // Set the inputAmount prop as the input value
@@ -97,11 +97,11 @@ export default function AmountInput({
         />
       </div>
       <div className="">
-        <button onClick={actionHandler} className="btn btn-primary">
+        <button onClick={actionHandler} className="btn btn-primary dark:bg-base-100">
           {actionText}
         </button>
 
-        <button onClick={() => approveWrite()} className="btn btn-primary">
+        <button onClick={() => approveWrite()} className="btn btn-primary dark:bg-base-100">
           approve
         </button>
         {isLoading && <div>Check Wallet</div>}

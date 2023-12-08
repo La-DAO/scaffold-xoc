@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { NextPage } from "next";
-import { BanknotesIcon, PhotoIcon, MagnifyingGlassIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon, ChatBubbleLeftRightIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
-
 
 const Home: NextPage = () => {
   return (
@@ -18,7 +17,8 @@ const Home: NextPage = () => {
             This is an open-source scaffold-eth project with a few extra goodies to help you get started building your
           </p>
           <p className="text-center text-lg">
-            application using XOC as an ERC20 token. It includes a few example contracts and a simple UI to interact with
+            application using XOC as an ERC20 token. It includes a few example contracts and a simple UI to interact
+            with
           </p>
         </div>
 
@@ -47,7 +47,12 @@ const Home: NextPage = () => {
               <ChatBubbleLeftRightIcon className="h-8 w-8 fill-secondary" />
               <p>
                 Explore our{" "}
-                <Link href="/blockexplorer" passHref className="link">
+                <Link
+                  href="https://app.daohaus.club/dao/0x89/0xd3f99b1cba012d823c59e3d21bb35acd88e07c58/"
+                  passHref
+                  className="link"
+                  target="_blank"
+                >
                   DAO
                 </Link>{" "}
                 and help us build the future of XOC.
