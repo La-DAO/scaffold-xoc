@@ -1,61 +1,87 @@
-import Link from "next/link";
+/* import Link from "next/link"; */
+import { benefitOne, benefitTwo } from "../components/index/data";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+
+/* import { BanknotesIcon, ChatBubbleLeftRightIcon, PhotoIcon } from "@heroicons/react/24/outline"; */
 import { MetaHeader } from "~~/components/MetaHeader";
+import Video from "~~/components/index/Video";
+import Benefits from "~~/components/index/benefits";
+import Cta from "~~/components/index/cta";
+import Faq from "~~/components/index/faq";
+import Hero from "~~/components/index/hero";
+import SectionTitle from "~~/components/index/sectionTitle";
+import Testimonials from "~~/components/index/testimonials";
+
+/* import PopUpWidget from "~~/components/index/popupWidget"; */
 
 const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/pages/index.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
+      <Hero />
+      <SectionTitle pretitle="Nextly Benefits" title=" Why should you use this landing page">
+        Nextly is a free landing page & marketing website template for startups and indie projects. Its built with
+        Next.js & TailwindCSS. And its completely open-source.
+      </SectionTitle>
+      <Benefits data={benefitOne} />
+      <Benefits imgPos="right" data={benefitTwo} />
+      <SectionTitle pretitle="Watch a video" title="Learn how to fullfil your needs">
+        This section is to highlight a promo or demo video of your product. Analysts says a landing page with video has
+        3% more conversion rate. So, don&apos;t forget to add one. Just like this.
+      </SectionTitle>
+      <Video />
+      <SectionTitle pretitle="Testimonials" title="Here's what our customers said">
+        Testimonails is a great way to increase the brand trust and awareness. Use this section to highlight your
+        popular customers.
+      </SectionTitle>
+      <Testimonials />
+      <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
+        Esta sección es para responder preguntas frecuentes de la comunidad emergente alrededor de $XOC y todo ese
+        desmadre.
+      </SectionTitle>
+      <Faq />
+      <Cta />
 
+      {/* <div className="flex items-center flex-col flex-grow pt-10">
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
+              <BanknotesIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
+                Interact with our smart contracts using the{" "}
+                <Link href="/defi" passHref className="link">
+                  DeFi
                 </Link>{" "}
                 tab.
               </p>
             </div>
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
+              <PhotoIcon className="h-8 w-8 fill-secondary" />
               <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
+                Coming soon will be our Frontend to interact with{" "}
+                <Link href="/" passHref className="link">
+                  NFT
                 </Link>{" "}
-                tab.
+              </p>
+            </div>
+            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+              <ChatBubbleLeftRightIcon className="h-8 w-8 fill-secondary" />
+              <p>
+                Explore our{" "}
+                <Link
+                  href="https://app.daohaus.club/dao/0x89/0xd3f99b1cba012d823c59e3d21bb35acd88e07c58/"
+                  passHref
+                  className="link"
+                  target="_blank"
+                >
+                  DAO
+                </Link>{" "}
+                and help us build the future of XOC.
               </p>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
