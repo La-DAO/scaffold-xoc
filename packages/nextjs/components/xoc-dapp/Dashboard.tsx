@@ -40,11 +40,7 @@ const Dashboard: React.FC = () => {
     ],
   });
 
-  const {
-    write: redeemXOC,
-    isError: redeemError,
-    isLoading: redeemLoading,
-  } = useContractWrite({
+  const { write: redeemXOC } = useContractWrite({
     address: "0x7ed1aCD46dE3a4E63f2D3b0f4fB5532e113a520B",
     abi: houseOfCoinABI,
     functionName: "paybackCoin",
@@ -97,8 +93,8 @@ const Dashboard: React.FC = () => {
                 onChangeInput={setRedeem}
                 value={redeem}
                 actionHandler={redeemXOC}
-                isError={redeemError}
-                isLoading={redeemLoading}
+                isError={false}
+                isLoading={false}
               />
             )}
             {selectedTab === "withdraw" && (
@@ -113,10 +109,24 @@ const Dashboard: React.FC = () => {
               />
             )}
             {(depositError || depositLoading) && <div>Hello!!!</div>}
-            {(mintingError || mintingLoading) && <div>Hello!!!</div>}
-            {redeemError && <div>Hello!!!</div>}
+            {mintingError && <div>Hello!!!</div>}
+            {mintingLoading && (
+              <dialog id="my_modal_1" className="modal">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg">Hello!</h3>
+                  <p className="py-4">Press ESC key or click the button below to close</p>
+                  <div className="modal-action">
+                    <form method="dialog">
+                      {/* if there is a button in form, it will close the modal */}
+                      <button className="btn">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            )}
+            {/*          {redeemError && <div>Hello!!!</div>}
             {redeemLoading && (
-              <div className="card w-96 bg-base-100 shadow-xl">
+              <dialog className="card w-96 bg-base-100 shadow-xl">
                 <figure>
                   <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
                 </figure>
@@ -127,8 +137,22 @@ const Dashboard: React.FC = () => {
                     <button className="btn btn-primary">Buy Now</button>
                   </div>
                 </div>
-              </div>
+              </dialog>
             )}
+            {redeemSuccess && (
+              <dialog className="card w-96 bg-base-100 shadow-xl">
+                <figure>
+                  <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">Success!!</h2>
+                  <p>The Tx went through!</p>
+                  <div className="card-actions justify-end">
+                    <button className="btn btn-primary">Close</button>
+                  </div>
+                </div>
+              </dialog>
+            )} */}
             {withdrawError && withdrawLoading && <div>Hello!!!</div>}
           </div>
           <CollateralInfo />

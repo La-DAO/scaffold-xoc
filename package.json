@@ -38,6 +38,7 @@
   },
   "packageManager": "yarn@3.2.3",
   "dependencies": {
-    "@uniswap/widgets": "^2.59.0"
+    "@uniswap/widgets": "^2.59.0",
+    "vercel": "^33.4.1"
   }
 }
