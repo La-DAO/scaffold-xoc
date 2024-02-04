@@ -11,46 +11,46 @@ import benefitOneImg from "../../public/benefit-one.png";
 import benefitTwoImg from "../../public/benefit-two.png";
 
 const benefitOne = {
-  title: "Highlight your benefits",
-  desc: "You can use this space to highlight your first benefit or a feature of your product. It can also contain an image or Illustration like in the example along with some bullet points.",
+  title: "El primer peso MXN decentralizado",
+  desc: "Por medio de contratos inteligentes, $XOC se convierte en una peso MXN digital sin intermediarios de por medio, lo que significa que no está controlada por ningún gobierno o banco central. Esto permite a los usuarios enviar y recibir dinero de forma rápida y segura, sin importar dónde se encuentren.",
   image: benefitOneImg,
   bullets: [
     {
-      title: "Understand your customers",
-      desc: "Then explain the first point breifly in one or two lines.",
+      title: "Tu moneda es codigo en el internet",
+      desc: "Es la siguiente evolución del dinero en linea.",
       icon: <FaceSmileIcon />,
     },
     {
-      title: "Improve acquisition",
-      desc: "Here you can add the next benefit point.",
+      title: "Transacciones rápidas y seguras",
+      desc: "Estamos en las redes de Polygon, Gnosis Chain y Optimism.",
       icon: <ChartBarSquareIcon />,
     },
     {
-      title: "Drive customer retention",
-      desc: "This will be your last bullet point in this section.",
+      title: "Sin intermediarios de por medio",
+      desc: "No está controlada por ningún gobierno o banco central.",
       icon: <CursorArrowRaysIcon />,
     },
   ],
 };
 
 const benefitTwo = {
-  title: "Offer more benefits here",
-  desc: "You can use this same layout with a flip image to highlight your rest of the benefits of your product. It can also contain an image or Illustration as above section along with some bullet points.",
+  title: "Construida por La DAO",
+  desc: "Todo surge desde una comunidad de personas que buscan construir un sistema financiero abierto y descentralizado. La DAO es una organización autónoma descentralizada que se encarga de gestionar todo el trabajo requerido para construir en DeFi.",
   image: benefitTwoImg,
   bullets: [
     {
-      title: "Mobile Responsive Template",
-      desc: "Nextly is designed as a mobile first responsive template.",
+      title: "Construimos usando herramientas Web3",
+      desc: "OpenZeppelin, Scaffold-Eth-2, DaoHaus, Safe y muchas mas...",
       icon: <DevicePhoneMobileIcon />,
     },
     {
-      title: "Powered by Next.js & TailwindCSS",
-      desc: "This template is powered by latest technologies and tools.",
+      title: "Una nueva democracia financiera",
+      desc: "Todo el trabajo esta direccionado a construir una nueva forma mas justa de hacer finanzas.",
       icon: <AdjustmentsHorizontalIcon />,
     },
     {
-      title: "Dark & Light Mode",
-      desc: "Nextly comes with a zero-config light & dark mode. ",
+      title: "Encuentra un mentor, o se el que nunca tuviste",
+      desc: "Nos encanta onboardear mas y mas gente dispuesta a contribuir.",
       icon: <SunIcon />,
     },
   ],

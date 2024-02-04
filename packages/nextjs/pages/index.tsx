@@ -19,20 +19,20 @@ const Home: NextPage = () => {
     <>
       <MetaHeader />
       <Hero />
-      <SectionTitle pretitle="Nextly Benefits" title=" Why should you use this landing page">
-        Nextly is a free landing page & marketing website template for startups and indie projects. Its built with
-        Next.js & TailwindCSS. And its completely open-source.
+      <SectionTitle pretitle="Beneficios de $XOC" title=" Para que empezar usar un peso digital">
+        El uso de $XOC es la unica forma de integrarte a la comunidad emergente Web3 que estar creciendo en México y el
+        mundo. Aquí te dejamos algunos beneficios de usar $XOC.
       </SectionTitle>
       <Benefits data={benefitOne} />
       <Benefits imgPos="right" data={benefitTwo} />
-      <SectionTitle pretitle="Watch a video" title="Learn how to fullfil your needs">
-        This section is to highlight a promo or demo video of your product. Analysts says a landing page with video has
-        3% more conversion rate. So, don&apos;t forget to add one. Just like this.
+      <SectionTitle pretitle="Wacha el video" title="Aprende como sucede la magia">
+        Aprende como funciona la magia de $XOC y como puedes empezar a usarlo. Aquí te dejamos un video para que te des
+        una idea de como funciona el protocolo y donde queda mas trabajo por hacer.
       </SectionTitle>
       <Video />
-      <SectionTitle pretitle="Testimonials" title="Here's what our customers said">
-        Testimonails is a great way to increase the brand trust and awareness. Use this section to highlight your
-        popular customers.
+      <SectionTitle pretitle="Testimonios" title="Aqui esta lo que dice la raza de $XOC">
+        Aqui te dejamos algunos testimonios de la comunidad emergente que esta construyendo y ya esta usando $XOC y como
+        les ha cambiado la vida.
       </SectionTitle>
       <Testimonials />
       <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">

@@ -79,7 +79,7 @@ const Hero = () => {
       <Container>
         <div className="flex flex-col justify-center">
           <div className="text-xl text-center text-inherit dark:text-inherit">
-            Trusted by <span className="text-indigo-600">2000+</span> customers worldwide
+            <h2>Mas de <span className=" text-green-500">1 millon de mexicanos</span> ya usan $XOC en sus empresas</h2>
           </div>
 
           <div className="flex flex-wrap justify-center gap-5 mt-10 md:justify-around">
