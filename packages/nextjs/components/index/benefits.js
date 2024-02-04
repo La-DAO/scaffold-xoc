@@ -1,16 +1,15 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 import Container from "./container";
 
-const Benefits = (props) => {
+const Benefits = props => {
   const { data } = props;
   return (
     <>
       <Container className="flex flex-wrap mb-20 lg:gap-10 lg:flex-nowrap ">
         <div
-          className={`flex items-center justify-center w-full lg:w-1/2 ${
-            props.imgPos === "right" ? "lg:order-1" : ""
-          }`}>
+          className={`flex items-center justify-center w-full lg:w-1/2 ${props.imgPos === "right" ? "lg:order-1" : ""}`}
+        >
           <div>
             <Image
               src={data.image}
@@ -25,16 +24,15 @@ const Benefits = (props) => {
         </div>
 
         <div
-          className={`flex flex-wrap items-center w-full lg:w-1/2 ${
-            data.imgPos === "right" ? "lg:justify-end" : ""
-          }`}>
+          className={`flex flex-wrap items-center w-full lg:w-1/2 ${data.imgPos === "right" ? "lg:justify-end" : ""}`}
+        >
           <div>
             <div className="flex flex-col w-full mt-4">
-              <h3 className="max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-gray-800 lg:leading-tight lg:text-4xl dark:text-white">
+              <h3 className="max-w-2xl mt-3 text-3xl font-bold leading-snug tracking-tight text-inherit lg:leading-tight lg:text-4xl dark:text-inherit">
                 {data.title}
               </h3>
 
-              <p className="max-w-2xl py-4 text-lg leading-normal text-gray-500 lg:text-xl xl:text-xl dark:text-gray-300">
+              <p className="max-w-2xl py-4 text-lg leading-normal text-inherit lg:text-xl xl:text-xl dark:text-inherit">
                 {data.desc}
               </p>
             </div>
@@ -63,12 +61,8 @@ function Benefit(props) {
           })}
         </div>
         <div>
-          <h4 className="text-xl font-medium text-gray-800 dark:text-gray-200">
-            {props.title}
-          </h4>
-          <p className="mt-1 text-gray-500 dark:text-gray-400">
-            {props.children}
-          </p>
+          <h4 className="text-xl font-medium text-inherit dark:text-inherit">{props.title}</h4>
+          <p className="mt-1 text-inherit dark:text-inherit">{props.children}</p>
         </div>
       </div>
     </>

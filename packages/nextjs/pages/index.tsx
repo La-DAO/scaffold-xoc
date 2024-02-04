@@ -1,13 +1,18 @@
-import Link from "next/link";
+/* import Link from "next/link"; */
 import { benefitOne, benefitTwo } from "../components/index/data";
 import type { NextPage } from "next";
-import { BanknotesIcon, ChatBubbleLeftRightIcon, PhotoIcon } from "@heroicons/react/24/outline";
+
+/* import { BanknotesIcon, ChatBubbleLeftRightIcon, PhotoIcon } from "@heroicons/react/24/outline"; */
 import { MetaHeader } from "~~/components/MetaHeader";
-import Benefits from "~~/components/index/Benefits";
-import SectionTitle from "~~/components/index/SectionTitle";
-import Testimonials from "~~/components/index/Testimonials";
 import Video from "~~/components/index/Video";
+import Benefits from "~~/components/index/benefits";
+import Cta from "~~/components/index/cta";
+import Faq from "~~/components/index/faq";
 import Hero from "~~/components/index/hero";
+import SectionTitle from "~~/components/index/sectionTitle";
+import Testimonials from "~~/components/index/testimonials";
+
+/* import PopUpWidget from "~~/components/index/popupWidget"; */
 
 const Home: NextPage = () => {
   return (
@@ -31,10 +36,13 @@ const Home: NextPage = () => {
       </SectionTitle>
       <Testimonials />
       <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
-        Answer your customers possible questions here, it will increase the conversion rate as well as support or chat
-        requests.
+        Esta sección es para responder preguntas frecuentes de la comunidad emergente alrededor de $XOC y todo ese
+        desmadre.
       </SectionTitle>
-      <div className="flex items-center flex-col flex-grow pt-10">
+      <Faq />
+      <Cta />
+
+      {/* <div className="flex items-center flex-col flex-grow pt-10">
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
@@ -73,7 +81,7 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

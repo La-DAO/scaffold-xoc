@@ -11,8 +11,8 @@ const Testimonials  = () => {
     <Container>
       <div className="grid gap-10 lg:grid-cols-2 xl:grid-cols-3">
         <div className="lg:col-span-2 xl:col-auto">
-          <div className="flex flex-col justify-between w-full h-full bg-gray-100 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
-            <p className="text-2xl leading-normal ">
+          <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
+            <p className="text-2xl leading-normal dark:text-inherit">
               Share a real <Mark>testimonial</Mark>
               that hits some of your benefits from one of your popular customer.
             </p>
@@ -21,8 +21,8 @@ const Testimonials  = () => {
           </div>
         </div>
         <div className="">
-          <div className="flex flex-col justify-between w-full h-full bg-gray-100 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
-            <p className="text-2xl leading-normal ">
+          <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
+            <p className="text-2xl leading-normal dark:text-inherit">
               Make sure you only pick the <Mark>right sentence</Mark>
               to keep it short and simple.
             </p>
@@ -31,8 +31,8 @@ const Testimonials  = () => {
           </div>
         </div>
         <div className="">
-          <div className="flex flex-col justify-between w-full h-full bg-gray-100 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
-            <p className="text-2xl leading-normal ">
+          <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
+            <p className="text-2xl leading-normal text-inherit dark:text-inherit">
               This is an <Mark>awesome</Mark> landing page template I&apos;ve seen. I
               would use this for anything.
             </p>
@@ -58,8 +58,8 @@ function Avatar(props) {
         />
       </div>
       <div>
-        <div className="text-lg font-medium">{props.name}</div>
-        <div className="text-gray-600 dark:text-gray-400">{props.title}</div>
+        <div className="text-lg font-medium dark:text-inherit">{props.name}</div>
+        <div className="text-inherit dark:text-inherit">{props.title}</div>
       </div>
     </div>
   );
