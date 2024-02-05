@@ -1,4 +1,5 @@
 /* import Link from "next/link"; */
+import Image from "next/image";
 import { benefitOne, benefitTwo } from "../components/index/data";
 import type { NextPage } from "next";
 
@@ -11,6 +12,7 @@ import Faq from "~~/components/index/faq";
 import Hero from "~~/components/index/hero";
 import SectionTitle from "~~/components/index/sectionTitle";
 import Testimonials from "~~/components/index/testimonials";
+import grow from "~~/public/grow.png";
 
 /* import PopUpWidget from "~~/components/index/popupWidget"; */
 
@@ -19,6 +21,19 @@ const Home: NextPage = () => {
     <>
       <MetaHeader />
       <Hero />
+      <div className="flex items-center justify-center w-full h-screen">
+        <div className="">
+          <Image
+            src={grow}
+            width="950"
+            height="950"
+            className={"object-cover"}
+            alt="Hero Illustration"
+            loading="eager"
+            placeholder="blur"
+          />
+        </div>
+      </div>
       <SectionTitle pretitle="Beneficios de $XOC" title=" Para que empezar usar un peso digital">
         El uso de $XOC es la unica forma de integrarte a la comunidad emergente Web3 que estar creciendo en México y el
         mundo. Aquí te dejamos algunos beneficios de usar $XOC.
