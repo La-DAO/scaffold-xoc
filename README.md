@@ -1,33 +1,15 @@
-# 🏗 Scaffold-ETH 2
+# 🏗 Scaffold-XOC
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+🧪 Un conjunto de herramientas actualizado y de código abierto para crear aplicaciones descentralizadas (dapps) en la blockchain de Ethereum. Está diseñado para facilitar a los desarrolladores la creación y despliegue de contratos inteligentes y la construcción de interfaces de usuario que interactúan con esos contratos.
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi, and Typescript.
+⚙️ Construido usando NextJS, RainbowKit, Hardhat, Wagmi, y Typescript.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+- ✅ **Contrato Hot Reload**: Tu frontend se autoadapta a tu contrato inteligente a medida que lo editas.
+- 🔥 **Burner Wallet & Local Faucet**: Pruebe rápidamente su aplicación con una billetera de quemador y un grifo local.
+- 🔐 **Integración con proveedores de billetera**: Conéctate a diferentes proveedores de billeteras e interactúa con la red Ethereum.
 
-## Contents
 
-- [Requirements](#requirements)
-- [Quickstart](#quickstart)
-- [Deploying your Smart Contracts to a Live Network](#deploying-your-smart-contracts-to-a-live-network)
-- [Deploying your NextJS App](#deploying-your-nextjs-app)
-- [Interacting with your Smart Contracts: SE-2 Custom Hooks](#interacting-with-your-smart-contracts-se-2-custom-hooks)
-- [Disabling Type & Linting Error Checks](#disabling-type-and-linting-error-checks)
-  - [Disabling commit checks](#disabling-commit-checks)
-  - [Deploying to Vercel without any checks](#deploying-to-vercel-without-any-checks)
-  - [Disabling Github Workflow](#disabling-github-workflow)
-- [Contributing to Scaffold-ETH 2](#contributing-to-scaffold-eth-2)
-
-## Requirements
-
-Before you begin, you need to install the following tools:
-
-- [Node (v18 LTS)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+A continuacion ua guia rapida para correr este proyecto como scaffold-eth-2
 
 ## Quickstart
 
