@@ -1,4 +1,4 @@
-# 🏗 Scaffold-XOC
+# 🏗 Scaffold-XOC 🍫
 
 🧪 Un conjunto de herramientas actualizado y de código abierto para crear aplicaciones descentralizadas (dapps) en la blockchain de Ethereum. Está diseñado para facilitar a los desarrolladores la creación y despliegue de contratos inteligentes y la construcción de interfaces de usuario que interactúan con esos contratos.
 
