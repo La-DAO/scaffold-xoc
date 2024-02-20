@@ -1,8 +1,61 @@
 import Image from "next/image";
 import heroImg from "../../public/hero-1.png";
 import Container from "./container";
+import { useAccount } from "wagmi";
+import { useContractWrite } from "wagmi";
+import { swapRouterABI } from "~~/components/index/abis/uniabis";
+
+enum FEE_BIPS {
+  ONE = 100,
+  FIVE = 500,
+  THIRTY = 3000,
+  HUNDRED = 10000,
+}
+
+/**
+ * @param path array of token addresses
+ * @param fees array from FEE_BIPS enum
+ * @returns hexbytes string `encodePacked` per solidity
+ */
+export function encodePath(path: string[], fees: FEE_BIPS[]) {
+  if (path.length != fees.length + 1) {
+    throw new Error("path/fee lengths do not match");
+  }
+  const hexStringFees = fees.map(fee => toUint24HexPadded(fee));
+  let encoded = "0x";
+  for (let i = 0; i < fees.length; i++) {
+    encoded += String(path[i]).slice(2);
+    encoded += hexStringFees[i];
+  }
+  // encode the path token
+  encoded += path[path.length - 1].slice(2);
+  return encoded.toLowerCase();
+}
+
+function toUint24HexPadded(num: number) {
+  const hex = num.toString(16);
+  return hex.padStart(6, "0");
+}
 
 const Hero = () => {
+  const path = encodePath(
+    [
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+      "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
+    ],
+    [FEE_BIPS.FIVE, FEE_BIPS.FIVE],
+  );
+
+  const address = useAccount();
+
+  const { write: executeTrade } = useContractWrite({
+    address: "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
+    abi: swapRouterABI,
+    functionName: "exactOutput",
+    args: [path, address, 100000000000000000000, 1000000000000000000, 0],
+  });
+
   return (
     <>
       <Container className="flex flex-wrap">
@@ -31,16 +84,29 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-              <a
-                href="https://web3templates.com/templates/nextly-landing-page-template-for-startups"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md "
+              <button
+                className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md"
+                onClick={() => (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal()}
               >
-                Buy 100 $XOC
-              </a>
+                Buy $XOC
+              </button>
+              <dialog id="my_modal_1" className="modal">
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg">BUY $XOC</h3>
+                  <p className="py-4">This is a Modal where you can eventually see a route and execute a swap upon.</p>
+                  <h3>Token In: Wrapped Ether</h3>
+                  <h3>Token Out: XOC</h3>
+                  <button onClick={() => executeTrade()}>Execute Trade</button>
+                  <div className="modal-action">
+                    <form method="dialog">
+                      {/* if there is a button in form, it will close the modal */}
+                      <button className="btn">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
               <a
-                href="https://github.com/web3templates/nextly-template/"
+                href="https://github.com/iafhurtado/scaffold-xoc"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="flex items-center space-x-2 text-gray-500 dark:text-gray-400"
@@ -57,7 +123,7 @@ const Hero = () => {
                   <title>GitHub</title>
                   <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                 </svg>
-                <span> Fork our contracts</span>
+                <span> Clonar el Repositorio</span>
               </a>
             </div>
           </div>
@@ -66,8 +132,8 @@ const Hero = () => {
           <div className="">
             <Image
               src={heroImg}
-              width="auto"
-              height="auto"
+              width={950}
+              height={950}
               className={"object-cover"}
               alt="Hero Illustration"
               loading="eager"
@@ -79,7 +145,9 @@ const Hero = () => {
       <Container>
         <div className="flex flex-col justify-center">
           <div className="text-xl text-center text-inherit dark:text-inherit">
-            <h2>Mas de <span className=" text-green-500">1 millon de mexicanos</span> ya usan $XOC en sus empresas</h2>
+            <h2>
+              Mas de <span className=" text-green-500">1 millon de mexicanos</span> ya usan $XOC en sus empresas
+            </h2>
           </div>
 
           <div className="flex flex-wrap justify-center gap-5 mt-10 md:justify-around">
