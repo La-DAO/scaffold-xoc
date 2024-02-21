@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { quoterABI } from "./abis/uniabis";
 import { formatEther } from "viem";
 import { useContractRead } from "wagmi";
@@ -10,11 +10,6 @@ enum FEE_BIPS {
   HUNDRED = 10000,
 }
 
-/**
- * @param path array of token addresses
- * @param fees array from FEE_BIPS enum
- * @returns hexbytes string `encodePacked` per solidity
- */
 export function encodePath(path: string[], fees: FEE_BIPS[]) {
   if (path.length != fees.length + 1) {
     throw new Error("path/fee lengths do not match");
@@ -25,7 +20,6 @@ export function encodePath(path: string[], fees: FEE_BIPS[]) {
     encoded += String(path[i]).slice(2);
     encoded += hexStringFees[i];
   }
-  // encode the path token
   encoded += path[path.length - 1].slice(2);
   return encoded.toLowerCase();
 }
@@ -50,7 +44,17 @@ const ProtocolNumbers = () => {
     abi: quoterABI,
     functionName: "quoteExactInput",
     args: [path, BigInt(1e18).toString()],
+    watch: true,
   });
+
+  const [latestPriceNumber, setLatestPriceNumber] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (quotedAmountOut) {
+      const amount = parseFloat(formatEther(BigInt(quotedAmountOut.toString())));
+      setLatestPriceNumber(amount);
+    }
+  }, [quotedAmountOut]);
 
   return (
     <>
@@ -58,13 +62,11 @@ const ProtocolNumbers = () => {
         <div className="stat">
           <div className="stat-title">Precio de 1 Ether</div>
           <div className="stat-value">
-            {quotedAmountOut
-              ? new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(
-                  parseFloat(formatEther(BigInt(quotedAmountOut.toString()))),
-                )
+            {latestPriceNumber
+              ? new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(latestPriceNumber)
               : "MXN0.00"}
           </div>
-          <div className="stat-desc text-base">En $XOC Mexicanos</div>
+          <div className="stat-desc text-base">En pesos $XOC</div>
         </div>
       </div>
     </>

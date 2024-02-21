@@ -1,16 +1,16 @@
 import Image from "next/image";
-import Link from "next/link";
 import { benefitOne, benefitTwo } from "../components/index/data";
 import type { NextPage } from "next";
-import { MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 import Benefits from "~~/components/index/benefits";
 import Cta from "~~/components/index/cta";
 import Faq from "~~/components/index/faq";
 import Hero from "~~/components/index/hero";
+import MXNFetch from "~~/components/index/mxnFetch";
 import ProtocolNumbers from "~~/components/index/protocolNumbers";
 import SectionTitle from "~~/components/index/sectionTitle";
 import Testimonials from "~~/components/index/testimonials";
+import XOCMinted from "~~/components/index/xocMinted";
 import grow from "~~/public/grow.png";
 
 const Home: NextPage = () => {
@@ -47,24 +47,29 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-            <SparklesIcon className="h-8 w-8 fill-secondary" />
-            <p>
-              Experiment with{" "}
-              <Link href="/example-ui" passHref className="link">
-                Example UI
-              </Link>{" "}
-              to build your own UI.
-            </p>
+            <MXNFetch />
+            <div className="text-xl font-semibold">
+              <p>
+                Fuente:{" "}
+                <span className=" text-blue-400 decoration-base-300 decoration-8 font-extrabold">ChainLink </span>
+              </p>
+            </div>
           </div>
           <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-            <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-            <p>
-              Explore your local transactions with the{" "}
-              <Link href="/blockexplorer" passHref className="link">
-                Block Explorer
-              </Link>{" "}
-              tab.
-            </p>
+            <XOCMinted />
+            <div className="text-xl font-semibold">
+              <p>
+                Fuente:{" "}
+                <a
+                  href="https://polygonscan.com/token/0xa411c9aa00e020e4f88bc19996d29c5b7adb4acf"
+                  target="_blank" // Add this attribute
+                  rel="noopener noreferrer" // Add these attributes for security reasons
+                  className="text-purple-400 decoration-base-300 decoration-8 font-extrabold"
+                >
+                  Polygonscan
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
