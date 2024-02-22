@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import heroImg from "../../public/hero-1.png";
-import Container from "./container";
-import React, { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
-import { useContractRead,useContractWrite } from "wagmi";
 import { houseOfReserveABI, xocolatlABI } from "../xoc-dapp/abis/xocabis";
+import Container from "./container";
+import { parseEther } from "viem";
+import { useAccount } from "wagmi";
+import { useContractRead, useContractWrite } from "wagmi";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
-import { parseEther } from 'viem';
 
 enum FEE_BIPS {
   ONE = 100,
@@ -70,17 +70,17 @@ const Hero = () => {
   }, [latestPriceData]);
 
   const { write: approve } = useContractWrite({
-    address: "0xa411c9aa00e020e4f88bc19996d29c5b7adb4acf",
+    address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     abi: xocolatlABI,
     functionName: "approve",
-    args: ["0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45", expectedAmountIn],
+    args: ["0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45", parseEther("0.002")],
   });
 
-  const { write: executeTrade } = useContractWrite({
+  const { write: executeTrade, isError } = useContractWrite({
     address: "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
     abi: swapRouterABI,
     functionName: "exactOutput",
-    args: [{path: path, recipient: account.address, amountOut: amountOut, amountInMaximum: expectedAmountIn}],
+    args: [{ path: path, recipient: account.address, amountOut: amountOut, amountInMaximum: expectedAmountIn }],
   });
 
   return (
@@ -120,11 +120,21 @@ const Hero = () => {
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
                   <h3 className="font-bold text-lg">BUY $XOC</h3>
-                  <p className="py-4">This is a Modal where you can eventually see a route and execute a swap upon.</p>
-                  <h3>Token In: Wrapped Ether</h3>
-                  <h3>Token Out: XOC</h3>
-                  <button onClick={() => approve()}>Approve Weth</button>
-                  <button onClick={() => executeTrade()}>Execute Trade</button>
+                  <p className="py-4">
+                    Since this is the 1st version, you need to click approve to approve 0.02 wETH that will be used to
+                    buy XOC on Uniswap.
+                  </p>
+                  <h3>Token In: ~0.02 Wrapped Ether</h3>
+                  <h3>Token Out: 100 XOC</h3>
+                  <div className=" mt-12">
+                    <button className="btn mr-5" onClick={() => approve()}>
+                      Approve Weth
+                    </button>
+                    <button className="btn btn-primary" onClick={() => executeTrade()}>
+                      Execute Trade
+                    </button>
+                  </div>
+                  {isError && <p className="text-red-500">Error executing trade</p>}
                   <div className="modal-action">
                     <form method="dialog">
                       {/* if there is a button in form, it will close the modal */}
