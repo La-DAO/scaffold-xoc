@@ -1,9 +1,12 @@
 import Image from "next/image";
 import heroImg from "../../public/hero-1.png";
 import Container from "./container";
+import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { useContractWrite } from "wagmi";
+import { useContractRead,useContractWrite } from "wagmi";
+import { houseOfReserveABI } from "../xoc-dapp/abis/xocabis";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
+import { parseEther } from 'viem';
 
 enum FEE_BIPS {
   ONE = 100,
@@ -38,22 +41,39 @@ function toUint24HexPadded(num: number) {
 }
 
 const Hero = () => {
+  const account = useAccount();
+  const [expectedAmountIn, setExpectedAmountIn] = useState<bigint>(0n);
+  const { data: latestPriceData }: { data: bigint | undefined } = useContractRead({
+    address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203", // House of Reserve (WETH)
+    abi: houseOfReserveABI,
+    functionName: "getLatestPrice",
+    watch: true,
+  });
   const path = encodePath(
     [
-      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-      "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
       "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
+      "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     ],
     [FEE_BIPS.FIVE, FEE_BIPS.FIVE],
   );
 
-  const address = useAccount();
+  const amountOut = parseEther("100");
+
+  useEffect(() => {
+    if (latestPriceData) {
+      const scaledLatestPrice = latestPriceData * 10000000000n;
+      const slippage = parseEther("0.005");
+      const scaleValue = parseEther("1") + slippage;
+      setExpectedAmountIn((amountOut * scaleValue) / scaledLatestPrice);
+    }
+  }, [latestPriceData]);
 
   const { write: executeTrade } = useContractWrite({
     address: "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
     abi: swapRouterABI,
     functionName: "exactOutput",
-    args: [path, address, 100000000000000000000, 1000000000000000000, 0],
+    args: [{path: path, recipient: account.address, amountOut: amountOut, amountInMaximum: expectedAmountIn}],
   });
 
   return (
