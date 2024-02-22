@@ -1,14 +1,13 @@
+import benefitOneImg from "../../public/benefit-one.png";
+import benefitTwoImg from "../../public/benefit-two.png";
 import {
-  FaceSmileIcon,
+  AdjustmentsHorizontalIcon,
   ChartBarSquareIcon,
   CursorArrowRaysIcon,
   DevicePhoneMobileIcon,
-  AdjustmentsHorizontalIcon,
+  FaceSmileIcon,
   SunIcon,
 } from "@heroicons/react/24/solid";
-
-import benefitOneImg from "../../public/benefit-one.png";
-import benefitTwoImg from "../../public/benefit-two.png";
 
 const benefitOne = {
   title: "El primer peso MXN decentralizado",
@@ -56,5 +55,4 @@ const benefitTwo = {
   ],
 };
 
-
-export {benefitOne, benefitTwo};
+export { benefitOne, benefitTwo };
