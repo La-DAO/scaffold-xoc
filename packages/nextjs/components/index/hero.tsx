@@ -4,7 +4,7 @@ import Container from "./container";
 import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { useContractRead,useContractWrite } from "wagmi";
-import { houseOfReserveABI } from "../xoc-dapp/abis/xocabis";
+import { houseOfReserveABI, xocolatlABI } from "../xoc-dapp/abis/xocabis";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
 import { parseEther } from 'viem';
 
@@ -69,6 +69,13 @@ const Hero = () => {
     }
   }, [latestPriceData]);
 
+  const { write: approve } = useContractWrite({
+    address: "0xa411c9aa00e020e4f88bc19996d29c5b7adb4acf",
+    abi: xocolatlABI,
+    functionName: "approve",
+    args: ["0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45", expectedAmountIn],
+  });
+
   const { write: executeTrade } = useContractWrite({
     address: "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
     abi: swapRouterABI,
@@ -116,6 +123,7 @@ const Hero = () => {
                   <p className="py-4">This is a Modal where you can eventually see a route and execute a swap upon.</p>
                   <h3>Token In: Wrapped Ether</h3>
                   <h3>Token Out: XOC</h3>
+                  <button onClick={() => approve()}>Approve Weth</button>
                   <button onClick={() => executeTrade()}>Execute Trade</button>
                   <div className="modal-action">
                     <form method="dialog">
