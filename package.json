@@ -39,6 +39,8 @@
   "packageManager": "yarn@3.2.3",
   "dependencies": {
     "@nextui-org/modal": "^2.0.28",
+    "@superfluid-finance/sdk-core": "^0.6.12",
+    "@superfluid-finance/widget": "^0.4.8",
     "@uniswap/sdk-core": "^4.0.10",
     "@uniswap/smart-order-router": "^3.21.1",
     "@uniswap/v3-sdk": "^3.10.2",

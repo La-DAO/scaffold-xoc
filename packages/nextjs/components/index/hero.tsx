@@ -95,22 +95,27 @@ const Hero = () => {
               Bienvenidos
               <br />A Scaffold-XOC
             </h1>
-            <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-inherit">
-              Este proyecto open-source es construido con{" "}
+            <h2 className="text-2xl font-semibold leading-normal text-gray-500 lg:text-2xl xl:text-xl dark:text-inherit">
+              ¡Nos complace tenerte aquí!
+            </h2>
+            <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl dark:text-inherit">
+              Scaffold-XOC es un proyecto de código abierto diseñado con{" "}
               <a
                 href="https://scaffoldeth.io/"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-green-500 underline"
               >
-                scaffold-eth-2
+                Scaffold-Eth-2.
               </a>{" "}
-              lo que significa que puedes clonar el codigo y usarlo a tu favor. Incluye algunas funciones conectadas a
-              los contratos de $XOC, incluyendo el ERC-20 y el protocolo para acuñar y quemar el stablecoin y una
-              interfaz de usuario sencilla con la que interactuar.
+              Esto significa que puedes clonar el código y empezar a utilizarlo fácilmente. Incluye funciones conectadas
+              a los contratos de $XOC y el protocolo para acuñar y quemar el stablecoin. Además, cuenta con una interfaz
+              de usuario intuitiva para que puedas empezar a interactuar de forma sencilla.
             </p>
-            <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl  dark:text-inherit">
-              Compra tus primeros 100 $XOC para apoyar a los desarrolladores de este proyecto.
+            <p className="py-5 text-xl leading-normal text-gray-500 lg:text-base  dark:text-inherit">
+              ¡No importa tu nivel de experiencia! Ya seas un experto en tecnología blockchain o estés dando tus
+              primeros pasos, Scaffold-XOC está aquí para ayudarte a comprender y utilizar $XOC de manera fácil y
+              accesible. ¡Explora, aprende y únete a la revolución de las finanzas descentralizadas con Scaffold-XOC!
             </p>
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
