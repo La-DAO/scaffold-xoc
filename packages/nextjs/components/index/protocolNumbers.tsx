@@ -42,7 +42,7 @@ const ProtocolNumbers = () => {
   const { data: quotedAmountOut } = useContractRead({
     address: "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6",
     abi: quoterABI,
-    functionName: "quoteExactInput",
+    functionName: "quoteExactOutput",
     args: [path, BigInt(1e18).toString()],
     watch: true,
   });

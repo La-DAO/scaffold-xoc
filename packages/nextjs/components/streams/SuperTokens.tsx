@@ -17,7 +17,7 @@ const SupertokensComponent: React.FC = () => {
     address: "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
     abi: xocolatlABI,
     functionName: "approve",
-    args: ["0x2c6dAB164dB072a8E2163fc5A547F229dc185C9f", approveAmount],
+    args: ["0x36d9a149895d905D117C38F3090f4344B76Ec9F4", approveAmount],
   });
 
   const { write: upgrade } = useContractWrite({

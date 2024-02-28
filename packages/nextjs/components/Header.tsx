@@ -23,6 +23,11 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/defi",
     icon: <BanknotesIcon className="h-4 w-4" />,
   },
+  {
+    label: "Streams",
+    href: "/streams",
+    icon: <BanknotesIcon className="h-4 w-4" />,
+  },
 ];
 
 export const HeaderMenuLinks = () => {
