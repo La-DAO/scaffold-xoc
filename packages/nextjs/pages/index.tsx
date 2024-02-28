@@ -28,22 +28,34 @@ const Home: NextPage = () => {
           />
         </div>
       </div>
-      <SectionTitle pretitle="Beneficios de $XOC" title=" Para que empezar usar un peso digital">
-        El uso de $XOC es la unica forma de integrarte a la comunidad emergente Web3 que estar creciendo en México y el
-        mundo. Aquí te dejamos algunos beneficios de usar $XOC.
+      <SectionTitle pretitle="Beneficios de $XOC" title="¿Por qué adoptar un peso digital?">
+        $XOC te abre las puertas a la creciente comunidad de Web3, tanto en México como en el mundo. Descubre los
+        múltiples beneficios que ofrece:
       </SectionTitle>
       <Benefits data={benefitOne} />
       <Benefits imgPos="right" data={benefitTwo} />
-      <SectionTitle pretitle="Wacha el video" title="Aprende como sucede la magia">
-        Aprende como funciona la magia de $XOC y como puedes empezar a usarlo. Aquí te dejamos un video para que te des
-        una idea de como funciona el protocolo y donde queda mas trabajo por hacer.
-      </SectionTitle>
-      <SectionTitle pretitle="Testimonios" title="Aqui esta lo que dice la raza de $XOC">
-        Aqui te dejamos algunos testimonios de la comunidad emergente que esta construyendo y ya esta usando $XOC y como
-        les ha cambiado la vida.
+      {/*       <SectionTitle pretitle="¡Mira el Video!" title="Sumérgete en el mundo de $XOC">
+        <div>
+          <p>¿Te preguntas cómo se lleva a cabo la magia de $XOC? ¿Quieres entender cómo funciona este innovador protocolo y cómo puedes comenzar a usarlo? ¡No busques más! Te presentamos un video que te llevará paso a paso a través del fascinante mundo de $XOC.</p>
+      
+          <h2>Descubre la magia de $XOC:</h2>
+          
+          <ul>
+            <li>Aprende cómo funciona el protocolo.</li>
+            <li>Descubre las posibilidades que ofrece.</li>
+            <li>Prepárate para ser parte de la revolución financiera.</li>
+            <li>¡Prepárate para una experiencia visual que te dejará con ganas de más!</li>
+          </ul>
+        </div>
+      </SectionTitle> */}
+      <div className="divider"></div>
+      <SectionTitle pretitle="¡Testimonios que inspiran!" title="Descubre las voces de la comunidad $XOC">
+        Descubre los testimonios auténticos de aquellos que forman parte de la vibrante comunidad que está construyendo
+        y utilizando $XOC. Desde experiencias transformadoras hasta historias de éxito, aquí encontrarás la inspiración
+        que necesitas para unirte a esta emocionante revolución financiera.
       </SectionTitle>
       <Testimonials />
-      <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
+      <SectionTitle pretitle="FAQ" title="Preguntas Frecuentes">
         Esta sección es para responder preguntas frecuentes de la comunidad emergente alrededor de $XOC y todo ese
         desmadre.
       </SectionTitle>

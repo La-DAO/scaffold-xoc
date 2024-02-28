@@ -12,30 +12,29 @@ const Testimonials = () => {
         <div className="lg:col-span-2 xl:col-auto">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal dark:text-inherit">
-              Share a real <Mark>testimonial</Mark>
-              that hits some of your benefits from one of your popular customer.
+              $XOC revolucionó mi desarrollo financiero. Rápido, seguro y empoderador. <Mark>Gracias</Mark> por abrir
+              posibilidades.
             </p>
 
-            <Avatar image={userOneImg} name="Sarah Steiner" title="VP Sales at Google" />
+            <Avatar image={userOneImg} name="Luna Perez" title="VP Sales - Bachoco" />
           </div>
         </div>
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal dark:text-inherit">
-              Make sure you only pick the <Mark>right sentence</Mark>
-              to keep it short and simple.
+              Con $XOC, las transacciones son rápidas y seguras. Me siento parte de una <Mark>comunidad sólida</Mark>.
             </p>
 
-            <Avatar image={userTwoImg} name="Dylan Ambrose" title="Lead marketer at Netflix" />
+            <Avatar image={userTwoImg} name="Brian Flores" title="Lead marketer en FEMSA" />
           </div>
         </div>
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal text-inherit dark:text-inherit">
-              This is an <Mark>awesome</Mark> landing page template I&apos;ve seen. I would use this for anything.
+              $XOC <Mark>simplifica</Mark> mis transacciones. Empoderamiento financiero y acceso a DeFi. ¡Gracias por la revolución!
             </p>
 
-            <Avatar image={userThreeImg} name="Gabrielle Winn" title="Co-founder of Acme Inc" />
+            <Avatar image={userThreeImg} name="Gabriel Guzman" title="Co-Founder de Mercado Libre" />
           </div>
         </div>
       </div>
