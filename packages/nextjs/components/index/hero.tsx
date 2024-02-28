@@ -3,6 +3,9 @@ import Image from "next/image";
 import heroImg from "../../public/hero-1.png";
 import { houseOfReserveABI, xocolatlABI } from "../xoc-dapp/abis/xocabis";
 import Container from "./container";
+import MXNFetch from "./mxnFetch";
+import ProtocolNumbers from "./protocolNumbers";
+import XOCMinted from "./xocMinted";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useContractRead, useContractWrite } from "wagmi";
@@ -87,14 +90,13 @@ const Hero = () => {
     <>
       <Container className="flex flex-wrap">
         <div className="flex items-center w-full lg:w-1/2">
-          <div className="max-w-2xl mb-8">
+          <div className="max-w-2xl m-8 text-justify">
             <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-inherit">
-              Welcome to
-              <br />
-              Scaffold-XOC
+              Bienvenidos
+              <br />A Scaffold-XOC
             </h1>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-inherit">
-              Este es un proyecto construyido con{" "}
+              Este proyecto open-source es construido con{" "}
               <a
                 href="https://scaffoldeth.io/"
                 target="_blank"
@@ -103,11 +105,12 @@ const Hero = () => {
               >
                 scaffold-eth-2
               </a>{" "}
-              con algunas modificaciones para ayudarte a empezar a construir tu dApp usando XOC como base. Incluye
-              algunos contratos de ejemplo y una interfaz de usuario sencilla con la que interactuar.
+              lo que significa que puedes clonar el codigo y usarlo a tu favor. Incluye algunas funciones conectadas a
+              los contratos de $XOC, incluyendo el ERC-20 y el protocolo para acuñar y quemar el stablecoin y una
+              interfaz de usuario sencilla con la que interactuar.
             </p>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl  dark:text-inherit">
-              Compra tus primeros 100 $XOC para apoyar a los builders de este proyecto.
+              Compra tus primeros 100 $XOC para apoyar a los desarrolladores de este proyecto.
             </p>
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
@@ -115,7 +118,7 @@ const Hero = () => {
                 className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md"
                 onClick={() => (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal()}
               >
-                Buy $XOC
+                Compra $XOC
               </button>
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
@@ -180,8 +183,50 @@ const Hero = () => {
           </div>
         </div>
       </Container>
+      <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
+        <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
+          <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+            <div className="App">
+              <ProtocolNumbers />
+            </div>
+            <div className="text-xl font-semibold">
+              <p>
+                Fuente:{" "}
+                <span className=" text-fuchsia-300 decoration-fuchsia-400 decoration-8 font-extrabold">
+                  Uniswap V3{" "}
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+            <MXNFetch />
+            <div className="text-xl font-semibold">
+              <p>
+                Fuente:{" "}
+                <span className=" text-blue-400 decoration-base-300 decoration-8 font-extrabold">ChainLink </span>
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+            <XOCMinted />
+            <div className="text-xl font-semibold">
+              <p>
+                Fuente:{" "}
+                <a
+                  href="https://polygonscan.com/token/0xa411c9aa00e020e4f88bc19996d29c5b7adb4acf"
+                  target="_blank" // Add this attribute
+                  rel="noopener noreferrer" // Add these attributes for security reasons
+                  className="text-purple-400 decoration-base-300 decoration-8 font-extrabold"
+                >
+                  Polygonscan
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <Container>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mt-24 mb-14">
           <div className="text-xl text-center text-inherit dark:text-inherit">
             <h2>
               Mas de <span className=" text-green-500">1 millon de mexicanos</span> ya usan $XOC en sus empresas
