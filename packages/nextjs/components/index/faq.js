@@ -35,11 +35,13 @@ const Faq = () => {
 const faqdata = [
   {
     question: "Como se respalda el valor de cada $XOC?",
-    answer: "Cada $XOC está respaldado por un token ERC20 en la red de Polygon, Gnosis Chain and Optimism, el cual se puede liquidar por el valor equivalente a la deuda en XOC y saldar la cuenta en el proceso, todo confiando en la red de validadores.",
+    answer:
+      "Cada $XOC está respaldado por un token ERC20 en la red de Polygon, Gnosis Chain and Optimism, el cual se puede liquidar por el valor equivalente a la deuda en XOC y saldar la cuenta en el proceso, todo confiando en la red de validadores.",
   },
   {
     question: "Que puedo hacer con $XOC?",
-    answer: "Puedes usar $XOC para pagar tus deudas, comprar bienes y servicios, o simplemente mantenerlo como una reserva de valor como si fuera cualquier otro peso mexicano. Lo mas impactante que puedes hacer es apoyar a la comunidad de La DAO construyendo el siguiente sistema fincanciero abierto y decentralizado.",
+    answer:
+      "Puedes usar $XOC para pagar tus deudas, comprar bienes y servicios, o simplemente mantenerlo como una reserva de valor como si fuera cualquier otro peso mexicano. Lo mas impactante que puedes hacer es apoyar a la comunidad de La DAO construyendo el siguiente sistema fincanciero abierto y decentralizado.",
   },
   {
     question: "Quien mantiene todo esto? ",
