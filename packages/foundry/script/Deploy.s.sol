@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "../contracts/YourContract.sol";
+import "../contracts/XocPin.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -15,15 +15,10 @@ contract DeployScript is ScaffoldETHDeploy {
             );
         }
         vm.startBroadcast(deployerPrivateKey);
-        YourContract yourContract = new YourContract(
-            vm.addr(deployerPrivateKey)
+        XocPin xocpin = new XocPin(
+            "https://ipfs.io/ipfs/QmRhakrLp8fzdMp4HDUm3ocFJ51bsBdZXjpZadPh7gYg4P?filename=Familia%20Tier%203.png"
         );
-        console.logString(
-            string.concat(
-                "YourContract deployed at: ",
-                vm.toString(address(yourContract))
-            )
-        );
+        console.logString(string.concat("XocPin deployed at: ", vm.toString(address(xocpin))));
         vm.stopBroadcast();
 
         /**

@@ -132,7 +132,7 @@ const Hero = () => {
                     Since this is the 1st version, you need to click approve to approve 0.02 wETH that will be used to
                     buy XOC on Uniswap.
                   </p>
-                  <h3>Token In: ~0.02 Wrapped Ether</h3>
+                  <h3>Token In: ~0.002 Wrapped Ether</h3>
                   <h3>Token Out: 100 XOC</h3>
                   <div className=" mt-12">
                     <button className="btn mr-5" onClick={() => approve()}>
