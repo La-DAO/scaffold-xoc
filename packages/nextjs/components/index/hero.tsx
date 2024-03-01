@@ -1,90 +1,71 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import heroImg from "../../public/hero-1.png";
-import { houseOfReserveABI, xocolatlABI } from "../xoc-dapp/abis/xocabis";
+import { erc20ABI, houseOfReserveABI } from "../xoc-dapp/abis/xocabis";
 import Container from "./container";
 import MXNFetch from "./mxnFetch";
 import ProtocolNumbers from "./protocolNumbers";
 import XOCMinted from "./xocMinted";
-import { parseEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useContractRead, useContractWrite } from "wagmi";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
-
-enum FEE_BIPS {
-  ONE = 100,
-  FIVE = 500,
-  THIRTY = 3000,
-  HUNDRED = 10000,
-}
-
-/**
- * @param path array of token addresses
- * @param fees array from FEE_BIPS enum
- * @returns hexbytes string `encodePacked` per solidity
- */
-export function encodePath(path: string[], fees: FEE_BIPS[]) {
-  if (path.length != fees.length + 1) {
-    throw new Error("path/fee lengths do not match");
-  }
-  const hexStringFees = fees.map(fee => toUint24HexPadded(fee));
-  let encoded = "0x";
-  for (let i = 0; i < fees.length; i++) {
-    encoded += String(path[i]).slice(2);
-    encoded += hexStringFees[i];
-  }
-  // encode the path token
-  encoded += path[path.length - 1].slice(2);
-  return encoded.toLowerCase();
-}
-
-function toUint24HexPadded(num: number) {
-  const hex = num.toString(16);
-  return hex.padStart(6, "0");
-}
+import { ADDR_LIB, XOC_ADDRESS } from "~~/utils/constants";
+import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
 
 const Hero = () => {
   const account = useAccount();
   const [expectedAmountIn, setExpectedAmountIn] = useState<bigint>(0n);
   const { data: latestPriceData }: { data: bigint | undefined } = useContractRead({
-    address: "0xd411BE9A105Ea7701FabBe58C2834b7033EBC203", // House of Reserve (WETH)
+    address: ADDR_LIB.polygon.weth.houseOfReserve, // House of Reserve (WETH)
     abi: houseOfReserveABI,
     functionName: "getLatestPrice",
     watch: true,
   });
-  const path = encodePath(
-    [
-      "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
-      "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
-      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    ],
+  const { data: accountAllowance }: { data: bigint | undefined } = useContractRead({
+    address: ADDR_LIB.polygon.weth.address,
+    abi: erc20ABI,
+    functionName: "allowance",
+    args: [account.address, ADDR_LIB.polygon.uniswapSwapRouter],
+  });
+
+  const xocWethPath = encodePath(
+    [XOC_ADDRESS, ADDR_LIB.polygon.usdc.address, ADDR_LIB.polygon.weth.address],
     [FEE_BIPS.FIVE, FEE_BIPS.FIVE],
   );
 
-  const amountOut = parseEther("100");
+  const ONE_HUNDRED_XOC = parseEther("100");
 
   useEffect(() => {
     if (latestPriceData) {
       const scaledLatestPrice = latestPriceData * 10000000000n;
       const slippage = parseEther("0.005");
       const scaleValue = parseEther("1") + slippage;
-      setExpectedAmountIn((amountOut * scaleValue) / scaledLatestPrice);
+      setExpectedAmountIn((ONE_HUNDRED_XOC * scaleValue) / scaledLatestPrice);
     }
   }, [latestPriceData]);
 
   const { write: approve } = useContractWrite({
-    address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    abi: xocolatlABI,
+    address: ADDR_LIB.polygon.weth.address,
+    abi: erc20ABI,
     functionName: "approve",
-    args: ["0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45", parseEther("0.002")],
+    args: [ADDR_LIB.polygon.uniswapSwapRouter, expectedAmountIn],
   });
 
   const { write: executeTrade, isError } = useContractWrite({
-    address: "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
+    address: ADDR_LIB.polygon.uniswapSwapRouter,
     abi: swapRouterABI,
     functionName: "exactOutput",
-    args: [{ path: path, recipient: account.address, amountOut: amountOut, amountInMaximum: expectedAmountIn }],
+    args: [
+      { path: xocWethPath, recipient: account.address, amountOut: ONE_HUNDRED_XOC, amountInMaximum: expectedAmountIn },
+    ],
   });
+
+  // TO REMOVE
+  console.log("accountAllowance", formatEther(accountAllowance ? accountAllowance : 0n));
+  console.log("expectedAmountIn", formatEther(expectedAmountIn));
+  console.log("Is allowance greater than expectedAmountIn", accountAllowance && accountAllowance >= expectedAmountIn);
+  console.log("If above is true, then you hide the approve button and show the executeTrade button");
 
   return (
     <>
@@ -92,14 +73,14 @@ const Hero = () => {
         <div className="flex items-center w-full lg:w-1/2">
           <div className="max-w-2xl m-8 text-justify">
             <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-inherit">
-              Bienvenidos
-              <br />A Scaffold-XOC
+              Welcome
+              <br /> to Scaffold-XOC
             </h1>
             <h2 className="text-2xl font-semibold leading-normal text-gray-500 lg:text-2xl xl:text-xl dark:text-inherit">
-              ¡Nos complace tenerte aquí!
+              ¡A decentralized app for Mexico's #1 decentralized stablecoin!
             </h2>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl dark:text-inherit">
-              Scaffold-XOC es un proyecto de código abierto diseñado con{" "}
+              Scaffold-XOC is an opensource project and this app interface was built using{" "}
               <a
                 href="https://scaffoldeth.io/"
                 target="_blank"
@@ -108,14 +89,14 @@ const Hero = () => {
               >
                 Scaffold-Eth-2.
               </a>{" "}
-              Esto significa que puedes clonar el código y empezar a utilizarlo fácilmente. Incluye funciones conectadas
-              a los contratos de $XOC y el protocolo para acuñar y quemar el stablecoin. Además, cuenta con una interfaz
-              de usuario intuitiva para que puedas empezar a interactuar de forma sencilla.
+              This app can be run locally in your machine or easily forked to be customized by yourself. It is connected
+              connected to the $XOC protocol and it allows minting and burning of the stablecoin through the protocol's
+              House of Reserves contracts.
             </p>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-base  dark:text-inherit">
-              ¡No importa tu nivel de experiencia! Ya seas un experto en tecnología blockchain o estés dando tus
-              primeros pasos, Scaffold-XOC está aquí para ayudarte a comprender y utilizar $XOC de manera fácil y
-              accesible. ¡Explora, aprende y únete a la revolución de las finanzas descentralizadas con Scaffold-XOC!
+              Your experience level doesn't matter! Whether you are a DeFi expert or taking your first steps,
+              Scaffold-XOC is here to help you understand and use $XOC in an easy and accessible way. Explore, learn and
+              join the decentralized finance revolution with Scaffold-XOC!
             </p>
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
@@ -128,11 +109,11 @@ const Hero = () => {
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
                   <h3 className="font-bold text-lg">BUY $XOC</h3>
-                  <p className="py-4">
-                    Since this is the 1st version, you need to click approve to approve 0.02 wETH that will be used to
-                    buy XOC on Uniswap.
-                  </p>
-                  <h3>Token In: ~0.002 Wrapped Ether</h3>
+                  <p className="py-4">Buy 100 XOC on Uniswap.</p>
+                  <h3>
+                    Token In: {expectedAmountIn ? parseFloat(formatEther(expectedAmountIn)).toFixed(5) : "reading"}{" "}
+                    Wrapped Ether
+                  </h3>
                   <h3>Token Out: 100 XOC</h3>
                   <div className=" mt-12">
                     <button className="btn mr-5" onClick={() => approve()}>
@@ -151,26 +132,6 @@ const Hero = () => {
                   </div>
                 </div>
               </dialog>
-              <a
-                href="https://github.com/iafhurtado/scaffold-xoc"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="flex items-center space-x-2 text-gray-500 dark:text-gray-400"
-              >
-                <svg
-                  role="img"
-                  width="24"
-                  height="24"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>GitHub</title>
-                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                </svg>
-                <span> Clonar el Repositorio</span>
-              </a>
             </div>
           </div>
         </div>
@@ -234,7 +195,7 @@ const Hero = () => {
         <div className="flex flex-col justify-center mt-24 mb-14">
           <div className="text-xl text-center text-inherit dark:text-inherit">
             <h2>
-              Mas de <span className=" text-green-500">1 millon de mexicanos</span> ya usan $XOC en sus empresas
+              $XOC is the <span className=" text-green-500">most liquid stablecoin</span> for the MXN currency.
             </h2>
           </div>
 

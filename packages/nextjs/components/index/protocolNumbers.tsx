@@ -2,45 +2,17 @@ import React, { useEffect, useState } from "react";
 import { quoterABI } from "./abis/uniabis";
 import { formatEther } from "viem";
 import { useContractRead } from "wagmi";
-
-enum FEE_BIPS {
-  ONE = 100,
-  FIVE = 500,
-  THIRTY = 3000,
-  HUNDRED = 10000,
-}
-
-export function encodePath(path: string[], fees: FEE_BIPS[]) {
-  if (path.length != fees.length + 1) {
-    throw new Error("path/fee lengths do not match");
-  }
-  const hexStringFees = fees.map(fee => toUint24HexPadded(fee));
-  let encoded = "0x";
-  for (let i = 0; i < fees.length; i++) {
-    encoded += String(path[i]).slice(2);
-    encoded += hexStringFees[i];
-  }
-  encoded += path[path.length - 1].slice(2);
-  return encoded.toLowerCase();
-}
-
-function toUint24HexPadded(num: number) {
-  const hex = num.toString(16);
-  return hex.padStart(6, "0");
-}
+import { ADDR_LIB, XOC_ADDRESS } from "~~/utils/constants";
+import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
 
 const ProtocolNumbers = () => {
   const path = encodePath(
-    [
-      "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-      "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
-      "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
-    ],
+    [ADDR_LIB.polygon.weth.address, ADDR_LIB.polygon.usdc.address, XOC_ADDRESS],
     [FEE_BIPS.FIVE, FEE_BIPS.FIVE],
   );
 
   const { data: quotedAmountOut } = useContractRead({
-    address: "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6",
+    address: ADDR_LIB.polygon.uniswapQuoter,
     abi: quoterABI,
     functionName: "quoteExactOutput",
     args: [path, BigInt(1e18).toString()],
