@@ -27,6 +27,7 @@ const Hero = () => {
     abi: erc20ABI,
     functionName: "allowance",
     args: [account.address, ADDR_LIB.polygon.uniswapSwapRouter],
+    watch: true,
   });
 
   const xocWethPath = encodePath(
@@ -43,7 +44,7 @@ const Hero = () => {
       const scaleValue = parseEther("1") + slippage;
       setExpectedAmountIn((ONE_HUNDRED_XOC * scaleValue) / scaledLatestPrice);
     }
-  }, [latestPriceData]);
+  }, [latestPriceData, ONE_HUNDRED_XOC]);
 
   const { write: approve } = useContractWrite({
     address: ADDR_LIB.polygon.weth.address,
@@ -60,7 +61,6 @@ const Hero = () => {
       { path: xocWethPath, recipient: account.address, amountOut: ONE_HUNDRED_XOC, amountInMaximum: expectedAmountIn },
     ],
   });
-
   // TO REMOVE
   console.log("accountAllowance", formatEther(accountAllowance ? accountAllowance : 0n));
   console.log("expectedAmountIn", formatEther(expectedAmountIn));
@@ -77,7 +77,7 @@ const Hero = () => {
               <br /> to Scaffold-XOC
             </h1>
             <h2 className="text-2xl font-semibold leading-normal text-gray-500 lg:text-2xl xl:text-xl dark:text-inherit">
-              ¡A decentralized app for Mexico's #1 decentralized stablecoin!
+              ¡A decentralized app for Mexico&apos;s #1 decentralized stablecoin!
             </h2>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl dark:text-inherit">
               Scaffold-XOC is an opensource project and this app interface was built using{" "}
@@ -90,11 +90,11 @@ const Hero = () => {
                 Scaffold-Eth-2.
               </a>{" "}
               This app can be run locally in your machine or easily forked to be customized by yourself. It is connected
-              connected to the $XOC protocol and it allows minting and burning of the stablecoin through the protocol's
-              House of Reserves contracts.
+              connected to the $XOC protocol and it allows minting and burning of the stablecoin through the
+              protocol&apos;s House of Reserves contracts.
             </p>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-base  dark:text-inherit">
-              Your experience level doesn't matter! Whether you are a DeFi expert or taking your first steps,
+              Your experience level doesn&apos;t matter! Whether you are a DeFi expert or taking your first steps,
               Scaffold-XOC is here to help you understand and use $XOC in an easy and accessible way. Explore, learn and
               join the decentralized finance revolution with Scaffold-XOC!
             </p>
@@ -116,12 +116,19 @@ const Hero = () => {
                   </h3>
                   <h3>Token Out: 100 XOC</h3>
                   <div className=" mt-12">
-                    <button className="btn mr-5" onClick={() => approve()}>
-                      Approve Weth
+                    <button
+                      className={`btn mr-5 ${accountAllowance && accountAllowance ? "bg-indigo-600" : ""}`}
+                      onClick={
+                        accountAllowance && accountAllowance >= expectedAmountIn
+                          ? () => executeTrade()
+                          : () => approve()
+                      }
+                    >
+                      {accountAllowance && accountAllowance >= expectedAmountIn ? "Execute Trade" : "Approve Weth"}
                     </button>
-                    <button className="btn btn-primary" onClick={() => executeTrade()}>
+                    {/* <button className="btn btn-primary" onClick={() => executeTrade()}>
                       Execute Trade
-                    </button>
+                    </button> */}
                   </div>
                   {isError && <p className="text-red-500">Error executing trade</p>}
                   <div className="modal-action">
