@@ -6,14 +6,13 @@ import Container from "./container";
 import MXNFetch from "./mxnFetch";
 import ProtocolNumbers from "./protocolNumbers";
 import XOCMinted from "./xocMinted";
-import { formatEther, parseEther } from "viem";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useContractRead, useContractWrite } from "wagmi";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
 import { ADDR_LIB, XOC_ADDRESS } from "~~/utils/constants";
 import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
-
 
 const Hero = () => {
   const account = useAccount();
@@ -67,7 +66,7 @@ const Hero = () => {
   });
 
   const handleBuyXocModal = () => {
-    if(account.isDisconnected) {
+    if (account.isDisconnected) {
       // open rainbow kit connect wallet modal
       openConnectModal?.();
     } else {

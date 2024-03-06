@@ -1,5 +1,5 @@
-import benefitOneImg from "../../public/warrior.png";
 import benefitTwoImg from "../../public/benefit-two.png";
+import benefitOneImg from "../../public/warrior.png";
 import {
   AdjustmentsHorizontalIcon,
   ChartBarSquareIcon,
