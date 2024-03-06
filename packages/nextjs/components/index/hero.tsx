@@ -7,15 +7,19 @@ import MXNFetch from "./mxnFetch";
 import ProtocolNumbers from "./protocolNumbers";
 import XOCMinted from "./xocMinted";
 import { formatEther, parseEther } from "viem";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 import { useContractRead, useContractWrite } from "wagmi";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
 import { ADDR_LIB, XOC_ADDRESS } from "~~/utils/constants";
 import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
 
+
 const Hero = () => {
   const account = useAccount();
   const [expectedAmountIn, setExpectedAmountIn] = useState<bigint>(0n);
+  const { openConnectModal } = useConnectModal();
+
   const { data: latestPriceData }: { data: bigint | undefined } = useContractRead({
     address: ADDR_LIB.polygon.weth.houseOfReserve, // House of Reserve (WETH)
     abi: houseOfReserveABI,
@@ -61,11 +65,16 @@ const Hero = () => {
       { path: xocWethPath, recipient: account.address, amountOut: ONE_HUNDRED_XOC, amountInMaximum: expectedAmountIn },
     ],
   });
-  // TO REMOVE
-  console.log("accountAllowance", formatEther(accountAllowance ? accountAllowance : 0n));
-  console.log("expectedAmountIn", formatEther(expectedAmountIn));
-  console.log("Is allowance greater than expectedAmountIn", accountAllowance && accountAllowance >= expectedAmountIn);
-  console.log("If above is true, then you hide the approve button and show the executeTrade button");
+
+  const handleBuyXocModal = () => {
+    if(account.isDisconnected) {
+      // open rainbow kit connect wallet modal
+      openConnectModal?.();
+    } else {
+      // Show buy Xoc modal
+      (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal();
+    }
+  };
 
   return (
     <>
@@ -102,7 +111,7 @@ const Hero = () => {
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
               <button
                 className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md"
-                onClick={() => (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal()}
+                onClick={handleBuyXocModal}
               >
                 Compra $XOC
               </button>
