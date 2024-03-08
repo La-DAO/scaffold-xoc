@@ -31,7 +31,8 @@ const Testimonials = () => {
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal text-inherit dark:text-inherit">
-              $XOC <Mark>simplifica</Mark> mis transacciones. Empoderamiento financiero y acceso a DeFi. ¡Gracias por la revolución!
+              $XOC <Mark>simplifica</Mark> mis transacciones. Empoderamiento financiero y acceso a DeFi. ¡Gracias por la
+              revolución!
             </p>
 
             <Avatar image={userThreeImg} name="Gabriel Guzman" title="Co-Founder de Mercado Libre" />

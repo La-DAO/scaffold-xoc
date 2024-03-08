@@ -18,6 +18,18 @@
       "~~/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/index/benefits.js", "components/index/container.js", "components/index/data.js", "components/index/sectionTitle.js", "components/index/testimonials.jsx", "components/index/hero.js", "components/index/testimonials.js", "components/index/video.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/index/benefits.js",
+    "components/index/container.js",
+    "components/index/data.js",
+    "components/index/sectionTitle.js",
+    "components/index/testimonials.jsx",
+    "components/index/hero.js",
+    "components/index/testimonials.js",
+    "components/index/video.js"
+  ],
   "exclude": ["node_modules"]
 }
