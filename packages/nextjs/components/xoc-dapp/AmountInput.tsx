@@ -40,7 +40,7 @@ export default function AmountInput({
   };
 
   return (
-    <form className="p-10 pt-36 flex flex-col items-center border-r-2">
+    <form className="p-10 pt-36 flex flex-col items-center">
       <div className="relative p-10">
         <input
           type="search"

@@ -12,30 +12,25 @@ const Testimonials = () => {
         <div className="lg:col-span-2 xl:col-auto">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal dark:text-inherit">
-              $XOC revolucionó mi desarrollo financiero. Rápido, seguro y empoderador. <Mark>Gracias</Mark> por abrir
-              posibilidades.
+              $XOC revolutionized my financial development. Fast, secure, and empowering. <Mark>Thank you</Mark> for opening possibilities.
             </p>
-
             <Avatar image={userOneImg} name="Luna Perez" title="VP Sales - Bachoco" />
           </div>
         </div>
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal dark:text-inherit">
-              Con $XOC, las transacciones son rápidas y seguras. Me siento parte de una <Mark>comunidad sólida</Mark>.
+              With $XOC, transactions are fast and secure. I feel part of a <Mark>solid community</Mark>.
             </p>
-
-            <Avatar image={userTwoImg} name="Brian Flores" title="Lead marketer en FEMSA" />
+            <Avatar image={userTwoImg} name="Brian Flores" title="Lead marketer at FEMSA" />
           </div>
         </div>
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-base-300 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal text-inherit dark:text-inherit">
-              $XOC <Mark>simplifica</Mark> mis transacciones. Empoderamiento financiero y acceso a DeFi. ¡Gracias por la
-              revolución!
+              $XOC <Mark>simplifies</Mark> my transactions. Financial empowerment and access to DeFi. Thanks for the revolution!
             </p>
-
-            <Avatar image={userThreeImg} name="Gabriel Guzman" title="Co-Founder de Mercado Libre" />
+            <Avatar image={userThreeImg} name="Gabriel Guzman" title="Co-Founder of Mercado Libre" />
           </div>
         </div>
       </div>

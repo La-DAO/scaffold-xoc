@@ -30,12 +30,12 @@ const MXNFetch: React.FC = () => {
     <>
       <div className="stats shadow">
         <div className="stat">
-          <div className="stat-title">Precio de 1 Ether</div>
+          <div className="stat-title">Price of 1 Ether</div>
           <div className="stat-value">
             {latestPriceNumber &&
               new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(latestPriceNumber)}
           </div>
-          <div className="stat-desc text-base">En pesos $MXN</div>
+          <div className="stat-desc text-base">In $MXN pesos</div>
         </div>
       </div>
     </>

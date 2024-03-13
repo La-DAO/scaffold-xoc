@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "./container";
 
-const FaqItem = ({ question, answer }) => {
+const FaqItem = ({ question, answer }: { question: string; answer: string }) => {
   return (
     <div className="mb-5">
       <details className="w-96 bg-base-100 p-4 rounded-xl shadow-md group mx-auto overflow-hidden max-h-[56px] open:!max-h-[400px] transition-[max-height] duration-500">
@@ -31,24 +31,24 @@ const Faq = () => {
 
 const faqdata = [
   {
-    question: "Como se respalda el valor de cada $XOC?",
+    question: "How is the value of each $XOC backed?",
     answer:
-      "Cada $XOC está respaldado por un token ERC20 en las redes de Polygon, Gnosis Chain y Optimism. Este respaldo garantiza que cada $XOC pueda ser liquidado por su valor equivalente en deuda en $XOC y saldar la cuenta en el proceso, todo respaldado por la red de validadores.",
+      "Each $XOC is backed by an ERC20 token on the Polygon, Gnosis Chain, and Optimism networks. This backing ensures that each $XOC can be liquidated for its equivalent value in $XOC-denominated debt and settle the account in the process, all backed by the network of validators.",
   },
   {
-    question: "Que puedo hacer con $XOC?",
+    question: "What can I do with $XOC?",
     answer:
-      "Puedes utilizar $XOC para pagar deudas, adquirir bienes y servicios, o simplemente mantenerlo como reserva de valor, al igual que cualquier otro peso mexicano. Además, puedes apoyar a la comunidad de La DAO construyendo el próximo sistema financiero abierto y descentralizado.",
+      "You can use $XOC to pay off debts, acquire goods and services, or simply hold it as a store of value, much like any other Mexican peso. Additionally, you can support the La DAO community by building the next open and decentralized financial system.",
   },
   {
-    question: "Quien mantiene todo esto? ",
+    question: "Who maintains all this?",
     answer:
-      "Utilizamos un modelo de negocio basado en una DAO, actualmente conocida como 'La DAO'. Esta organización autónoma descentralizada se encarga de gestionar todo el trabajo necesario para construir en DeFi.",
+      "We utilize a business model based on a DAO, currently known as 'La DAO.' This decentralized autonomous organization is responsible for managing all the work needed to build in DeFi.",
   },
   {
-    question: "Como me involucro? ",
+    question: "How can I get involved?",
     answer:
-      "Puedes adquirir $XOC en cualquier exchange que lo ofrezca, o participar en la DAO y contribuir a la construcción del futuro de las finanzas descentralizadas. Si tienes habilidades que crees que puedan ser útiles, no dudes en contactarnos.",
+      "You can acquire $XOC on any exchange that offers it, or participate in the DAO and contribute to building the future of decentralized finance. If you have skills you think may be useful, feel free to reach out to us.",
   },
 ];
 
