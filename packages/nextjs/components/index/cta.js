@@ -38,6 +38,7 @@ const Cta = () => {
     address: "0x72fa57b14b83D165EACab4E2bB3B3B9D5B9C5A52",
     abi: xocPinABI,
     functionName: "nextTokenId",
+    watch: true,
   });
 
   const [latestTokenID, setLatestTokenID] = useState(null);
