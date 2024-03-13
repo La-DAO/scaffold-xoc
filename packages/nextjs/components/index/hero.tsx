@@ -6,6 +6,7 @@ import Container from "./container";
 import MXNFetch from "./mxnFetch";
 import ProtocolNumbers from "./protocolNumbers";
 import XOCMinted from "./xocMinted";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useContractRead, useContractWrite } from "wagmi";
@@ -16,6 +17,8 @@ import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
 const Hero = () => {
   const account = useAccount();
   const [expectedAmountIn, setExpectedAmountIn] = useState<bigint>(0n);
+  const { openConnectModal } = useConnectModal();
+
   const { data: latestPriceData }: { data: bigint | undefined } = useContractRead({
     address: ADDR_LIB.polygon.weth.houseOfReserve, // House of Reserve (WETH)
     abi: houseOfReserveABI,
@@ -27,6 +30,7 @@ const Hero = () => {
     abi: erc20ABI,
     functionName: "allowance",
     args: [account.address, ADDR_LIB.polygon.uniswapSwapRouter],
+    watch: true,
   });
 
   const xocWethPath = encodePath(
@@ -43,7 +47,8 @@ const Hero = () => {
       const scaleValue = parseEther("1") + slippage;
       setExpectedAmountIn((ONE_HUNDRED_XOC * scaleValue) / scaledLatestPrice);
     }
-  }, [ONE_HUNDRED_XOC, latestPriceData]);
+  }, [latestPriceData, ONE_HUNDRED_XOC]);
+
 
   const { write: approve } = useContractWrite({
     address: ADDR_LIB.polygon.weth.address,
@@ -61,11 +66,15 @@ const Hero = () => {
     ],
   });
 
-  // TO REMOVE
-  console.log("accountAllowance", formatEther(accountAllowance ? accountAllowance : 0n));
-  console.log("expectedAmountIn", formatEther(expectedAmountIn));
-  console.log("Is allowance greater than expectedAmountIn", accountAllowance && accountAllowance >= expectedAmountIn);
-  console.log("If above is true, then you hide the approve button and show the executeTrade button");
+  const handleBuyXocModal = () => {
+    if (account.isDisconnected) {
+      // open rainbow kit connect wallet modal
+      openConnectModal?.();
+    } else {
+      // Show buy Xoc modal
+      (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal();
+    }
+  };
 
   return (
     <>
@@ -102,7 +111,7 @@ const Hero = () => {
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
               <button
                 className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md"
-                onClick={() => (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal()}
+                onClick={handleBuyXocModal}
               >
                 Compra $XOC
               </button>
@@ -116,12 +125,19 @@ const Hero = () => {
                   </h3>
                   <h3>Token Out: 100 XOC</h3>
                   <div className=" mt-12">
-                    <button className="btn mr-5" onClick={() => approve()}>
-                      Approve Weth
+                    <button
+                      className={`btn mr-5 ${accountAllowance && accountAllowance ? "bg-indigo-600" : ""}`}
+                      onClick={
+                        accountAllowance && accountAllowance >= expectedAmountIn
+                          ? () => executeTrade()
+                          : () => approve()
+                      }
+                    >
+                      {accountAllowance && accountAllowance >= expectedAmountIn ? "Execute Trade" : "Approve Weth"}
                     </button>
-                    <button className="btn btn-primary" onClick={() => executeTrade()}>
+                    {/* <button className="btn btn-primary" onClick={() => executeTrade()}>
                       Execute Trade
-                    </button>
+                    </button> */}
                   </div>
                   {isError && <p className="text-red-500">Error executing trade</p>}
                   <div className="modal-action">
