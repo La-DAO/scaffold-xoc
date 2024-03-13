@@ -49,6 +49,7 @@ const Hero = () => {
     }
   }, [latestPriceData, ONE_HUNDRED_XOC]);
 
+
   const { write: approve } = useContractWrite({
     address: ADDR_LIB.polygon.weth.address,
     abi: erc20ABI,

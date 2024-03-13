@@ -3,7 +3,6 @@ import { useState } from "react";
 import AmountInput from "./AmountInput";
 import CollateralInfo from "./CollateralInfo";
 import PillNavigation from "./PillNavigation";
-import Swap from "./Swap";
 import { houseOfCoinABI, houseOfReserveABI } from "./abis/xocabis";
 import { parseEther } from "viem";
 import { useContractWrite } from "wagmi";
@@ -110,7 +109,7 @@ const Dashboard: React.FC = () => {
               />
             )}
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              {selectedTab === "exchange" && <Swap />}
+              {selectedTab === "exchange"}
             </div>
             {(depositError || depositLoading) && <div>Hello!!!</div>}
             {mintingError && <div>Hello!!!</div>}
