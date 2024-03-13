@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Familia from "../../public/Familia.png";
 import heroImg from "../../public/hero-1.png";
 import { erc20ABI, houseOfReserveABI } from "../xoc-dapp/abis/xocabis";
+import { xocPinABI } from "./abis/xocpin";
 import Container from "./container";
 import MXNFetch from "./mxnFetch";
 import ProtocolNumbers from "./protocolNumbers";
 import XOCMinted from "./xocMinted";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
-import { useContractRead, useContractWrite } from "wagmi";
+import { useBalance, useContractRead, useContractWrite } from "wagmi";
 import { swapRouterABI } from "~~/components/index/abis/uniabis";
 import { ADDR_LIB, XOC_ADDRESS } from "~~/utils/constants";
 import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
@@ -16,6 +19,8 @@ import { FEE_BIPS, encodePath } from "~~/utils/scaffold-eth";
 const Hero = () => {
   const account = useAccount();
   const [expectedAmountIn, setExpectedAmountIn] = useState<bigint>(0n);
+  const { openConnectModal } = useConnectModal();
+
   const { data: latestPriceData }: { data: bigint | undefined } = useContractRead({
     address: ADDR_LIB.polygon.weth.houseOfReserve, // House of Reserve (WETH)
     abi: houseOfReserveABI,
@@ -27,6 +32,15 @@ const Hero = () => {
     abi: erc20ABI,
     functionName: "allowance",
     args: [account.address, ADDR_LIB.polygon.uniswapSwapRouter],
+    watch: true,
+  });
+
+  const { data: accountXOCAllowance }: { data: bigint | undefined } = useContractRead({
+    address: XOC_ADDRESS,
+    abi: erc20ABI,
+    functionName: "allowance",
+    args: [account.address, "0x72fa57b14b83D165EACab4E2bB3B3B9D5B9C5A52"],
+    watch: true,
   });
 
   const xocWethPath = encodePath(
@@ -43,29 +57,80 @@ const Hero = () => {
       const scaleValue = parseEther("1") + slippage;
       setExpectedAmountIn((ONE_HUNDRED_XOC * scaleValue) / scaledLatestPrice);
     }
-  }, [ONE_HUNDRED_XOC, latestPriceData]);
+  }, [latestPriceData, ONE_HUNDRED_XOC]);
 
-  const { write: approve } = useContractWrite({
+  const { data: WETHBalance } = useBalance({
+    address: account.address,
+    token: ADDR_LIB.polygon.weth.address,
+    watch: true,
+  });
+
+  const { data: XOCBalance } = useBalance({
+    address: account.address,
+    token: XOC_ADDRESS,
+    watch: true,
+  });
+
+  const {
+    write: approve,
+    isLoading: waitingApproval,
+    isSuccess: successfulApproval,
+  } = useContractWrite({
     address: ADDR_LIB.polygon.weth.address,
     abi: erc20ABI,
     functionName: "approve",
     args: [ADDR_LIB.polygon.uniswapSwapRouter, expectedAmountIn],
+    onSuccess(data) {
+      console.log("Success", data);
+    },
+    onSettled(data, error) {
+      console.log("Settled", { data, error });
+    },
   });
 
-  const { write: executeTrade, isError } = useContractWrite({
+  const {
+    write: executeTrade,
+    isError,
+    isLoading: waitingTrade,
+    isSuccess: succesfulTrade,
+  } = useContractWrite({
     address: ADDR_LIB.polygon.uniswapSwapRouter,
     abi: swapRouterABI,
     functionName: "exactOutput",
     args: [
       { path: xocWethPath, recipient: account.address, amountOut: ONE_HUNDRED_XOC, amountInMaximum: expectedAmountIn },
     ],
+    onSuccess(data) {
+      console.log("Success", data);
+    },
+    onSettled(data, error) {
+      console.log("Settled", { data, error });
+    },
   });
 
-  // TO REMOVE
-  console.log("accountAllowance", formatEther(accountAllowance ? accountAllowance : 0n));
-  console.log("expectedAmountIn", formatEther(expectedAmountIn));
-  console.log("Is allowance greater than expectedAmountIn", accountAllowance && accountAllowance >= expectedAmountIn);
-  console.log("If above is true, then you hide the approve button and show the executeTrade button");
+  const handleBuyXocModal = () => {
+    if (account.isDisconnected) {
+      // open rainbow kit connect wallet modal
+      openConnectModal?.();
+    } else {
+      // Show buy Xoc modal
+      (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal();
+    }
+  };
+
+  const { write: approveXOC } = useContractWrite({
+    address: "0xa411c9Aa00E020e4f88Bc19996d29c5B7ADB4ACf",
+    abi: erc20ABI,
+    functionName: "approve",
+    args: ["0x72fa57b14b83D165EACab4E2bB3B3B9D5B9C5A52", parseEther("100")],
+  });
+
+  const { write: mintNFT } = useContractWrite({
+    address: "0x72fa57b14b83D165EACab4E2bB3B3B9D5B9C5A52",
+    abi: xocPinABI,
+    functionName: "mint",
+    args: [account.address],
+  });
 
   return (
     <>
@@ -102,33 +167,134 @@ const Hero = () => {
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
               <button
                 className="px-8 py-4 text-lg font-medium text-center text-white bg-indigo-600 rounded-md"
-                onClick={() => (document.getElementById("my_modal_1") as HTMLDialogElement)?.showModal()}
+                onClick={handleBuyXocModal}
               >
-                Compra $XOC
+                Try $XOC
               </button>
               <dialog id="my_modal_1" className="modal">
-                <div className="modal-box">
-                  <h3 className="font-bold text-lg">BUY $XOC</h3>
-                  <p className="py-4">Buy 100 XOC on Uniswap.</p>
-                  <h3>
-                    Token In: {expectedAmountIn ? parseFloat(formatEther(expectedAmountIn)).toFixed(5) : "reading"}{" "}
-                    Wrapped Ether
-                  </h3>
-                  <h3>Token Out: 100 XOC</h3>
-                  <div className=" mt-12">
-                    <button className="btn mr-5" onClick={() => approve()}>
-                      Approve Weth
-                    </button>
-                    <button className="btn btn-primary" onClick={() => executeTrade()}>
-                      Execute Trade
-                    </button>
-                  </div>
-                  {isError && <p className="text-red-500">Error executing trade</p>}
-                  <div className="modal-action">
+                <div className="modal-box flex flex-col max-h-full max-w-6xl p-10 ">
+                  <div className="card-actions justify-end">
                     <form method="dialog">
                       {/* if there is a button in form, it will close the modal */}
-                      <button className="btn">Close</button>
+                      <button className="btn btn-square btn-md btn-ghost mb-5">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
                     </form>
+                  </div>
+                  <div className="flex">
+                    <div className="card w-96 image-full mr-16">
+                      <div className="card-body">
+                        <h2 className="card-title text-primary">Buy XOC!</h2>
+                        <p className="text-secondary">
+                          Buy XOC directly from Uniswap through our Frontend. We make it easy for you by approving the
+                          exact amount of WETH that 100$XOC will cost.
+                        </p>
+                        <div className="flex">
+                          <div className="stats stats-vertical shadow" style={{ marginRight: "20px" }}>
+                            <div className="stat">
+                              <div className="stat-title">Token In</div>
+                              <div className="stat-value">
+                                {expectedAmountIn ? parseFloat(formatEther(expectedAmountIn)).toFixed(5) : "reading"}
+                              </div>
+                              <div className="stat-desc">Wrapped Ether</div>
+                            </div>
+                            <div className="stat">
+                              <div className="stat-title">Your Balance</div>
+                              <div className="stat-value">
+                                {WETHBalance ? parseFloat(formatEther(WETHBalance.value)).toFixed(5) : "reading"}
+                              </div>
+                              <div className="stat-desc">Wrapped Ether</div>
+                            </div>
+                          </div>
+                          <div className="stats stats-vertical shadow" style={{ marginRight: "20px" }}>
+                            <div className="stat">
+                              <div className="stat-title">Token Out</div>
+                              <div className="stat-value">100</div>
+                              <div className="stat-desc">$XOC</div>
+                            </div>
+                            <div className="stat">
+                              <div className="stat-title">Your Balance</div>
+                              <div className="stat-value">
+                                {XOCBalance ? parseFloat(formatEther(XOCBalance.value)).toFixed(2) : "reading"}
+                              </div>
+                              <div className="stat-desc">$XOC</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="card-actions justify-start">
+                          <div className="mt-12">
+                            <button
+                              className={`btn btn-lg mr-5 ${
+                                accountAllowance && expectedAmountIn ? " bg-base-100" : ""
+                              }`}
+                              onClick={
+                                accountAllowance && accountAllowance >= expectedAmountIn
+                                  ? () => executeTrade()
+                                  : () => approve()
+                              }
+                            >
+                              {accountAllowance && accountAllowance >= expectedAmountIn
+                                ? "Execute Trade"
+                                : "Approve Weth"}
+                            </button>
+                            {waitingApproval && <span className="loading loading-infinity loading-lg">Waiting</span>}
+                            {successfulApproval && (
+                              <div className="toast toast-top toast-end">
+                                <div className="alert alert-success">
+                                  <span>Approval sent successfully.</span>
+                                </div>
+                              </div>
+                            )}
+                            {isError && <p className="text-red-500">Error executing trade</p>}
+                            {waitingTrade && <p className="text-blue-500">Waiting for trade to execute</p>}
+                            {succesfulTrade && (
+                              <div className="toast toast-top toast-end">
+                                <div className="alert alert-success">
+                                  <span>Approval sent successfully.</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="divider divider-horizontal mx-16">
+                      <strong>OR</strong>
+                    </div>
+                    <div className="card bg-base-100 shadow-xl image-full ">
+                      <div className="card-body">
+                        <h2 className="card-title text-primary">Mint NFT!</h2>
+                        <figure>
+                          <Image src={Familia} alt="Familia" height={500} width={500} />
+                        </figure>
+                        <p className="text-secondary">You&apos;ll need 100 $XOC to mint this NFT</p>
+
+                        <div className="card-actions justify-end">
+                          <button
+                            className={`btn btn-lg mr-5 ${
+                              accountXOCAllowance && expectedAmountIn ? " bg-base-100" : ""
+                            }`}
+                            onClick={
+                              accountXOCAllowance && accountXOCAllowance >= expectedAmountIn
+                                ? () => mintNFT()
+                                : () => approveXOC()
+                            }
+                          >
+                            {accountXOCAllowance && accountXOCAllowance >= expectedAmountIn
+                              ? "Mint NFT"
+                              : "Approve Minting"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </dialog>
@@ -157,7 +323,7 @@ const Hero = () => {
             </div>
             <div className="text-xl font-semibold">
               <p>
-                Fuente:{" "}
+                Source:{" "}
                 <span className=" text-fuchsia-300 decoration-fuchsia-400 decoration-8 font-extrabold">
                   Uniswap V3{" "}
                 </span>
@@ -168,7 +334,7 @@ const Hero = () => {
             <MXNFetch />
             <div className="text-xl font-semibold">
               <p>
-                Fuente:{" "}
+                Source:{" "}
                 <span className=" text-blue-400 decoration-base-300 decoration-8 font-extrabold">ChainLink </span>
               </p>
             </div>
@@ -177,7 +343,7 @@ const Hero = () => {
             <XOCMinted />
             <div className="text-xl font-semibold">
               <p>
-                Fuente:{" "}
+                Source:{" "}
                 <a
                   href="https://polygonscan.com/token/0xa411c9aa00e020e4f88bc19996d29c5b7adb4acf"
                   target="_blank" // Add this attribute

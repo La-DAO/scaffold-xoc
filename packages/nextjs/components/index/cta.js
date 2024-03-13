@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 import { xocolatlABI } from "../xoc-dapp/abis/xocabis";
 import { xocPinABI } from "./abis/xocpin";
-import Container from "./container";
-import { parseEther } from "viem";
-import { useContractWrite } from "wagmi";
+import { parseEther, formatEther } from "viem";
+import { useContractRead, useContractWrite } from "wagmi";
 import { useAccount } from "wagmi";
+import Familia  from "../../public/Familia.png";
+import Image from "next/image";
+
 
 const Cta = () => {
   const [showCard, setShowCard] = useState(false);
@@ -33,13 +34,31 @@ const Cta = () => {
     args: [account.address],
   });
 
+  const { data: tokenID} = useContractRead({
+    address: "0x72fa57b14b83D165EACab4E2bB3B3B9D5B9C5A52",
+    abi: xocPinABI,
+    functionName: "nextTokenId",
+  });
+
+  const [latestTokenID, setLatestTokenID] = useState(null);
+
+  useEffect(() => {
+    if (tokenID) {
+      const ID = tokenID.toString() -1;
+      setLatestTokenID(ID);
+    }
+  }, [tokenID]);
+
+
+  console.log(tokenID);
+
   return (
-    <Container>
+    <div className="flex items-center justify-center">
       <div className="flex flex-wrap items-center justify-between w-full max-w-4xl gap-5 mx-auto text-white bg-indigo-600 px-7 py-7 lg:px-12 lg:py-12 lg:flex-nowrap rounded-xl">
         <div className="flex-grow text-center lg:text-left">
-          <h2 className="text-2xl font-medium lg:text-3xl">Listo para unirte a la aventura?</h2>
+          <h2 className="text-2xl font-medium lg:text-3xl">Ready to join the movement?</h2>
           <p className="mt-2 font-medium text-white text-opacity-90 lg:text-xl">
-            No dejes pasar la oportunidad de aportar!
+            Don&apos;t let your chance pass you by!
           </p>
         </div>
         <div className="flex-shrink-0 w-full text-center lg:w-auto">
@@ -47,7 +66,7 @@ const Cta = () => {
             onClick={handleButtonClick}
             className="inline-block py-3 mx-auto text-lg font-medium text-center text-indigo-600 bg-white rounded-md px-7 lg:px-10 lg:py-5"
           >
-            Mintea tu NFT de membresía
+            Mint a membership NFT
           </button>
         </div>
       </div>
@@ -66,10 +85,10 @@ const Cta = () => {
               </svg>
             </button>
           </div>
+          <div className="mx-auto flex justify-center">
+            <Image src={Familia} alt="Familia" height={500} width={500} className="" />
+          </div>
           <div className="card bg-base-100 shadow-xl">
-            <figure>
-              <Image src="https://daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg" alt="Album" />
-            </figure>
             <div className="card-body">
               <div className="stats stats-vertical lg:stats-horizontal shadow mb-5">
                 <div className="stat">
@@ -79,8 +98,8 @@ const Cta = () => {
                 </div>
                 <div className="stat">
                   <div className="stat-title">NFTs Minted</div>
-                  <div className="stat-value">4,200</div>
-                  <div className="stat-desc">↗︎ 400 (22%)</div>
+                  <div className="stat-value">{latestTokenID}</div>
+                  <div className="stat-desc">So Far</div>
                 </div>
               </div>
               <div className="card-actions justify-center">
@@ -97,7 +116,7 @@ const Cta = () => {
           </div>
         </div>
       )}
-    </Container>
+    </div>
   );
 };
 

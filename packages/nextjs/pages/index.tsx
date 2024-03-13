@@ -28,9 +28,9 @@ const Home: NextPage = () => {
           />
         </div>
       </div>
-      <SectionTitle pretitle="Beneficios de $XOC" title="¿Por qué adoptar un peso digital?">
-        $XOC te abre las puertas a la creciente comunidad de Web3, tanto en México como en el mundo. Descubre los
-        múltiples beneficios que ofrece:
+      <SectionTitle pretitle="Why adopt a digital peso?" title="Benefits of $XOC">
+        $XOC opens the doors to the thriving Web3 community, both in Mexico and around the world. Explore the numerous
+        benefits it offers:
       </SectionTitle>
       <Benefits data={benefitOne} />
       <Benefits imgPos="right" data={benefitTwo} />
@@ -49,15 +49,15 @@ const Home: NextPage = () => {
         </div>
       </SectionTitle> */}
       <div className="divider"></div>
-      <SectionTitle pretitle="¡Testimonios que inspiran!" title="Descubre las voces de la comunidad $XOC">
-        Descubre los testimonios auténticos de aquellos que forman parte de la vibrante comunidad que está construyendo
-        y utilizando $XOC. Desde experiencias transformadoras hasta historias de éxito, aquí encontrarás la inspiración
-        que necesitas para unirte a esta emocionante revolución financiera.
+      <SectionTitle pretitle="¡Inspiring testimonials!" title="Explore the voices of the $XOC community">
+        Discover authentic testimonials from those who are part of the vibrant community building and using $XOC. From
+        transformative experiences to success stories, here you&apos;ll find the inspiration you need to join this
+        exciting financial revolution.
       </SectionTitle>
       <Testimonials />
-      <SectionTitle pretitle="FAQ" title="Preguntas Frecuentes">
-        Esta sección es para responder preguntas frecuentes de la comunidad emergente alrededor de $XOC y todo ese
-        desmadre.
+      <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
+        This section is for answering frequently asked questions from the emerging community around $XOC and all that
+        jazz.
       </SectionTitle>
       <Faq />
       <Cta />

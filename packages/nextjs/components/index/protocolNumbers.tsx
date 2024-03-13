@@ -32,13 +32,13 @@ const ProtocolNumbers = () => {
     <>
       <div className="stats shadow">
         <div className="stat">
-          <div className="stat-title">Precio de 1 Ether</div>
+          <div className="stat-title">Price of 1 Ether</div>
           <div className="stat-value">
             {latestPriceNumber
               ? new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(latestPriceNumber)
               : "MXN0.00"}
           </div>
-          <div className="stat-desc text-base">En pesos $XOC</div>
+          <div className="stat-desc text-base">In $XOC Pesos</div>
         </div>
       </div>
     </>

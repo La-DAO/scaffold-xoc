@@ -33,12 +33,12 @@ const Streams: NextPage = () => {
         <SuperTokens />
         <div className="card w-3/5 bg-base-100 shadow-xl mt-16">
           <div className="card-body">
+            <div className="stat-title">Account&apos;s Flowrate</div>
             <FlowingBalance
               startingBalance={BigInt(balanceOf?.toString() ?? "0")}
               startingBalanceDate={new Date()}
               flowRate={BigInt(getAccountFlowrate?.toString() ?? "0")}
             />
-            <div className="stat-title">Account&apos;s Flowrate</div>
           </div>
         </div>
       </div>

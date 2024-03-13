@@ -50,7 +50,8 @@ const SupertokensComponent: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center space-y-8">
+      {/* Top section */}
+      <div className="flex items-center justify-center space-x-8">
         <div className="text-center">
           <h1>Approve Upgrade</h1>
           <input
@@ -64,7 +65,6 @@ const SupertokensComponent: React.FC = () => {
             Approve Upgrade
           </button>
         </div>
-
         <div className="text-center">
           <h1>Upgrade</h1>
           <input
@@ -78,7 +78,6 @@ const SupertokensComponent: React.FC = () => {
             Upgrade
           </button>
         </div>
-
         <div className="text-center">
           <h1>Downgrade</h1>
           <input
@@ -92,7 +91,10 @@ const SupertokensComponent: React.FC = () => {
             Downgrade
           </button>
         </div>
+      </div>
 
+      {/* Bottom section */}
+      <div className="flex items-center justify-center space-x-8">
         <div className="text-center">
           <h1>Set Flowrate</h1>
           <input
@@ -106,7 +108,6 @@ const SupertokensComponent: React.FC = () => {
             Set Flowrate
           </button>
         </div>
-
         <div className="text-center">
           <h1>Delete Flowrate</h1>
           <input

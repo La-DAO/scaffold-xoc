@@ -47,13 +47,13 @@ export const Footer = () => {
           <div className="flex justify-center items-center gap-2 text-sm w-full">
             <div className="text-center">
               <a href="https://github.com/La-DAO/scaffold-xoc" target="_blank" rel="noreferrer" className="link">
-                Clona el codigo
+                Clone this project
               </a>
             </div>
             <span>·</span>
             <div className="flex justify-center items-center gap-2">
               <p className="m-0 text-center">
-                Construido con <HeartIcon className="inline-block h-4 w-4" /> por
+                Built with <HeartIcon className="inline-block h-4 w-4" /> by
               </p>
               <a
                 className="flex justify-center items-center gap-1"
@@ -67,7 +67,7 @@ export const Footer = () => {
             <span>·</span>
             <div className="text-center">
               <a href="https://discord.gg/eYGZJpYdU2" target="_blank" rel="noreferrer" className="link">
-                Soporte
+                Technical Support
               </a>
             </div>
           </div>

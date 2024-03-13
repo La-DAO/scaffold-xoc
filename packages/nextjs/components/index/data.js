@@ -10,46 +10,46 @@ import {
 } from "@heroicons/react/24/solid";
 
 const benefitOne = {
-  title: "El primer peso MXN decentralizado",
-  desc: "$XOC es la encarnación digital del peso mexicano gracias a los contratos inteligentes. Sin intermediarios, esto significa que está libre de control gubernamental o bancario. Así, los usuarios pueden realizar transacciones de manera rápida y segura, sin importar su ubicación.",
+  title: "The First Decentralized MXN Peso",
+  desc: "$XOC is the digital embodiment of the Mexican peso thanks to smart contracts. Without intermediaries, this means it's free from government or banking control. Thus, users can conduct transactions quickly and securely, regardless of their location.",
   image: benefitOneImg,
   bullets: [
     {
-      title: "Tu moneda, en código en la red:",
-      desc: "Es la evolución natural del dinero digital.",
+      title: "Your currency, encoded on the network:",
+      desc: "It'S the natural evolution of digital money.",
       icon: <FaceSmileIcon />,
     },
     {
-      title: "Transacciones ágiles y seguras:",
-      desc: "Con presencia en las redes de Polygon, Gnosis Chain y Optimism, $XOC garantiza rapidez y seguridad en cada transacción.",
+      title: "Agile and secure transactions:",
+      desc: "With a presence on Polygon, Gnosis Chain, and Optimism networks, $XOC ensures speed and security in every transaction.",
       icon: <ChartBarSquareIcon />,
     },
     {
-      title: "Sin intermediarios:",
-      desc: "Libre de la influencia gubernamental o bancaria, $XOC te ofrece autonomía y libertad financiera.",
+      title: "No intermediaries:",
+      desc: "Free from government or banking influence, $XOC offers you autonomy and financial freedom.",
       icon: <CursorArrowRaysIcon />,
     },
   ],
 };
 
 const benefitTwo = {
-  title: "Desarrollado por La DAO",
-  desc: "En el corazón de Scaffold-XOC late el espíritu de una comunidad dedicada a forjar un sistema financiero abierto y descentralizado. La DAO representa una organización autónoma descentralizada que lidera el camino en la construcción de soluciones innovadoras en DeFi.",
+  title: "Developed by La DAO",
+  desc: "At the heart of Scaffold-XOC lies the spirit of a community dedicated to forging an open and decentralized financial system. La DAO represents a decentralized autonomous organization that leads the way in building innovative DeFi solutions.",
   image: benefitTwoImg,
   bullets: [
     {
-      title: "Construyendo con herramientas Web3:",
-      desc: "Nuestro arsenal está compuesto por las mejores herramientas de Web3, desde OpenZeppelin hasta Scaffold-Eth-2, pasando por DAOHaus y Safe, entre muchas otras. Cada una de estas herramientas es una pieza clave en la construcción de un futuro financiero más inclusivo y accesible.",
+      title: "Building with Web3 tools:",
+      desc: "Our arsenal is composed of the best Web3 tools, from OpenZeppelin to Scaffold-Eth-2, passing through DAOHaus and Safe, among many others. Each of these tools is a key piece in building a more inclusive and accessible financial future.",
       icon: <DevicePhoneMobileIcon />,
     },
     {
-      title: "Una nueva era de democracia financiera:",
-      desc: "Cada línea de código, cada reunión, cada decisión está orientada hacia la creación de un sistema financiero más equitativo y transparente. Nos comprometemos a impulsar una revolución financiera que brinde oportunidades para todos, sin importar su origen o situación económica.",
+      title: "A new era of financial democracy:",
+      desc: "Every line of code, every meeting, every decision is oriented towards creating a fairer and more transparent financial system. We are committed to driving a financial revolution that provides opportunities for everyone, regardless of their background or economic situation.",
       icon: <AdjustmentsHorizontalIcon />,
     },
     {
-      title: "Encuentra un mentor, o sé el mentor que siempre quisiste tener:",
-      desc: "En La DAO, valoramos el crecimiento personal y profesional. Estamos aquí para guiar y apoyar a aquellos que desean contribuir y aprender. ¡Únete a nosotros y sé parte de esta emocionante jornada hacia un futuro financiero más brillante y equitativo!",
+      title: "Find a mentor, or be the mentor you always wanted to have:",
+      desc: "At La DAO, we value personal and professional growth. We are here to guide and support those who wish to contribute and learn. Join us and be part of this exciting journey towards a brighter and more equitable financial future!",
       icon: <SunIcon />,
     },
   ],
