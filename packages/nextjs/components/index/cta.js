@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { xocolatlABI } from "../xoc-dapp/abis/xocabis";
 import { xocPinABI } from "./abis/xocpin";
-import { parseEther, formatEther } from "viem";
+import { parseEther } from "viem";
 import { useContractRead, useContractWrite } from "wagmi";
 import { useAccount } from "wagmi";
 import Familia  from "../../public/Familia.png";
@@ -34,7 +34,7 @@ const Cta = () => {
     args: [account.address],
   });
 
-  const { data: tokenID} = useContractRead({
+  const { data: tokenID } = useContractRead({
     address: "0x72fa57b14b83D165EACab4E2bB3B3B9D5B9C5A52",
     abi: xocPinABI,
     functionName: "nextTokenId",
@@ -45,11 +45,10 @@ const Cta = () => {
 
   useEffect(() => {
     if (tokenID) {
-      const ID = tokenID.toString() -1;
+      const ID = tokenID.toString() - 1;
       setLatestTokenID(ID);
     }
   }, [tokenID]);
-
 
   console.log(tokenID);
 
