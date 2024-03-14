@@ -61,11 +61,13 @@ const Hero = () => {
     }
   }, [latestPriceData, ONE_HUNDRED_XOC]);
 
+
   const { data: WETHBalance } = useBalance({
     address: account.address,
     token: ADDR_LIB.polygon.weth.address,
     watch: true,
   });
+
 
   const { data: XOCBalance } = useBalance({
     address: account.address,
@@ -185,6 +187,33 @@ const Hero = () => {
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box flex flex-col max-h-full max-w-6xl p-10 ">
                   <div className="card-actions justify-end">
+
+                <div className="modal-box">
+                  <h3 className="font-bold text-lg">BUY $XOC</h3>
+                  <p className="py-4">Buy 100 XOC on Uniswap.</p>
+                  <h3>
+                    Token In: {expectedAmountIn ? parseFloat(formatEther(expectedAmountIn)).toFixed(5) : "reading"}{" "}
+                    Wrapped Ether
+                  </h3>
+                  <h3>Token Out: 100 XOC</h3>
+                  <div className=" mt-12">
+                    <button
+                      className={`btn mr-5 ${accountAllowance && accountAllowance ? "bg-indigo-600" : ""}`}
+                      onClick={
+                        accountAllowance && accountAllowance >= expectedAmountIn
+                          ? () => executeTrade()
+                          : () => approve()
+                      }
+                    >
+                      {accountAllowance && accountAllowance >= expectedAmountIn ? "Execute Trade" : "Approve Weth"}
+                    </button>
+                    {/* <button className="btn btn-primary" onClick={() => executeTrade()}>
+                      Execute Trade
+                    </button> */}
+                  </div>
+                  {isError && <p className="text-red-500">Error executing trade</p>}
+                  <div className="modal-action">
+
                     <form method="dialog">
                       {/* if there is a button in form, it will close the modal */}
                       <button className="btn btn-square btn-md btn-ghost mb-5">
